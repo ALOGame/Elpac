@@ -1,2 +1,2 @@
 # Elpac
-Game created for ItNetwork competition in summer 2019
+Game created for ITNetwork.cz competition in summer 2019

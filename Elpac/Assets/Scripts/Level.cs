@@ -45,10 +45,10 @@ public class Level
                 gridX = byte.Parse(parameters[i + 1]);
                 gridY = byte.Parse(parameters[i + 2]);
 
-                if (usedGridCoords.ContainsKey(gridX) && usedGridCoords[gridX] == gridY) // Check if the position in grid is already occupied. If so file is corrupted
-                    return;
+                //if (usedGridCoords.ContainsKey(gridX) && usedGridCoords[gridX] == gridY) // Check if the position in grid is already occupied. If so file is corrupted
+                    //return;
 
-                usedGridCoords.Add(gridX, gridY);
+                //usedGridCoords.Add(gridX, gridY);
 
                 facingRight = bool.Parse(parameters[i + 3]);
 

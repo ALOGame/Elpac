@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
 
             if (hit.collider != null) // Something was clicked
             {
-                Appliance appliance = hit.transform.GetComponent<Appliance>();
+                Appliance appliance = hit.collider.GetComponent<Appliance>();
 
                 if (GameManager.gameRunning)
                 {

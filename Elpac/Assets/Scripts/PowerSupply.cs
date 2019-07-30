@@ -26,5 +26,7 @@ public class PowerSupply : Appliance
     }
 
     protected override void OnPowered(bool powered)
-    {}
+    {
+
+    }
 }

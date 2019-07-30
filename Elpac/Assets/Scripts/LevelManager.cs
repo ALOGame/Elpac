@@ -4,15 +4,46 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public SlotGrid slotGrid;
+    private LevelLoader levelLoader;
+
+    private void Start()
     {
-        
+        levelLoader = new LevelLoader();
+        levelLoader.LoadLevel("levels/default/test.txt");
+
+        if (levelLoader.loadedLevel.isLoaded)
+            CreateAppliances();
+        else
+            Debug.LogError("Error when loading level");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void CreateAppliances()
     {
-        
+        slotGrid.AddAppliances(levelLoader.loadedLevel.appliances);
+    }
+
+    private void Update()
+    {
+        // Check if user clicked on a appliance if so interact with it
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero);
+
+            if (hit.collider != null) // Something was clicked
+            {
+                Appliance appliance = hit.transform.GetComponent<Appliance>();
+
+                if (GameManager.gameRunning)
+                {
+                    if (appliance.canInteractOnPlay)
+                    {
+                        appliance.InteractOnPlay();
+                    }
+                }
+            }
+        }
     }
 }

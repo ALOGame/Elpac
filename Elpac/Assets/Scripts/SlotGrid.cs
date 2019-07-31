@@ -17,10 +17,10 @@ public class SlotGrid : MonoBehaviour
 
     private Slot[,] slots;
 
-    private const byte xCount = 6;
-    private const byte yCount = 6;
+    private const byte xCount = 10;
+    private const byte yCount = 10;
 
-    private readonly Vector2 spacing = new Vector2(0.8f, 0.8f);
+    private readonly Vector2 spacing = new Vector2(0.5f, 0.5f);
     private readonly Vector2 leftCornerOffset = new Vector2(1, -1);
     private Vector3 cameraTopLeftPos;
 

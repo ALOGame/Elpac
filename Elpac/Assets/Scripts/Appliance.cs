@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class Appliance : MonoBehaviour
 {
-    public enum Type { PowerSupply, PowerConsumer, VerticalWire, HorizontalWire, Heater, PowerGenerator}
     public ApplianceInfo info;
 
     public bool powered;
@@ -34,13 +33,11 @@ public abstract class Appliance : MonoBehaviour
 [System.Serializable]
 public struct ApplianceInfo
 {
-    public Appliance.Type type;
     public byte gridX, gridY;
     public bool facingRight;
 
-    public ApplianceInfo(Appliance.Type type, byte gridX, byte gridY, bool facingRight)
+    public ApplianceInfo(byte gridX, byte gridY, bool facingRight)
     {
-        this.type = type;
         this.gridX = gridX;
         this.gridY = gridY;
         this.facingRight = facingRight;

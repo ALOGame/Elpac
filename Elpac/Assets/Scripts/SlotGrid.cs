@@ -66,10 +66,7 @@ public class SlotGrid : MonoBehaviour
             appliance.fixedPosition = true;
             appliance.info = info;
 
-            if (appliance is Wire)
-                slots[info.gridX, info.gridY].SetWire((Wire)appliance);
-            else
-                slots[info.gridX, info.gridY].SetAppliance(appliance);
+            slots[info.gridX, info.gridY].SetAppliance(appliance);
         }
     }
 

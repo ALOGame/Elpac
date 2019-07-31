@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+[Flags]
+public enum WireDirection { Right = 1, Left = 2, Up = 4, Down = 8 }
 
 public class Slot : MonoBehaviour
 {
     private Appliance appliance;
-    private Wire wire;
+    public WireDirection wire { get; private set; }
 
     public bool isOccupied { get { return appliance != null; } }
 
@@ -14,20 +18,13 @@ public class Slot : MonoBehaviour
         this.appliance = appliance;
     }
 
-    public void SetWire(Wire wire)
-    {
-        this.wire = wire;
-    }
-
     public void PowerOn()
     {
-        wire.PowerOn();
         appliance.PowerOn();
     }
 
     public void PowerOff()
     {
-        wire.PowerOff();
         appliance.PowerOff();
     }
 }

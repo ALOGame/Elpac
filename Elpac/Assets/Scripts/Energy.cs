@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Energy
 {
-    public enum Type { Light, Wind, Steam }
+
 }

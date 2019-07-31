@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Heater : Appliance
 {
-    public Entity steam;
     public Vector3 steamSpawnPoint;
     public byte steamReleaseTime;
 
@@ -14,7 +13,7 @@ public class Heater : Appliance
     {
         if (lastSteamReleased == steamReleaseTime)
         {
-            Instantiate(steam.Prefab, steamSpawnPoint, Quaternion.identity);
+            //Instantiate(steam.Prefab, steamSpawnPoint, Quaternion.identity);
             lastSteamReleased = 0;
         }
         else

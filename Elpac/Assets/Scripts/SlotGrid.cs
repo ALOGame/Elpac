@@ -20,7 +20,7 @@ public class SlotGrid : MonoBehaviour
     private const byte xCount = 10;
     private const byte yCount = 10;
 
-    private readonly Vector2 spacing = new Vector2(0.5f, 0.5f);
+    private readonly Vector2 spacing = new Vector2(2f, 2f);
     private readonly Vector2 leftCornerOffset = new Vector2(1, -1);
     private Vector3 cameraTopLeftPos;
 
@@ -44,7 +44,7 @@ public class SlotGrid : MonoBehaviour
             for (int y = 0; y < yCount; y++)
             {
                 position = new Vector3(leftCornerOffset.x + x * spacing.x, leftCornerOffset.y - y * spacing.y, 10);
-                position += cameraTopLeftPos;
+                position += cameraTopLeftPos + new Vector3(2, -2, 0);
                 slots[x, y] = Instantiate(slot, position, Quaternion.identity, transform).GetComponent<Slot>();
             }
         }
@@ -59,7 +59,7 @@ public class SlotGrid : MonoBehaviour
         foreach (ApplianceInfo info in appliances)
         {
             position = new Vector3(leftCornerOffset.x + info.gridX * spacing.x, leftCornerOffset.y - info.gridY * spacing.y, 10);
-            position += cameraTopLeftPos;
+            position += cameraTopLeftPos + new Vector3(2, -2, 0);
             go = Instantiate(GetCorespondingAppliance(info.type), position, Quaternion.identity, transform);
 
             appliance = go.GetComponent<Appliance>();

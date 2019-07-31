@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoweConsumer : Appliance
+public class PowerConsumer : Appliance
 {
     protected override void OnPowered(bool powered)
     {

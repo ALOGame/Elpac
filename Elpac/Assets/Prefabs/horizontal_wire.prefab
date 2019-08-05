@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8724052924424616245}
   - component: {fileID: 970478767277452764}
-  - component: {fileID: 9215402393100926410}
+  - component: {fileID: 3135392870170196436}
   m_Layer: 0
   m_Name: horizontal_wire
   m_TagString: Untagged
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9215402393100926410
+--- !u!114 &3135392870170196436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6800190078007776005}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33429501a60acf5438b8374198a4f79d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b2a1e9fb1b846f469ff9bc3c6894875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   info:
@@ -98,6 +98,5 @@ MonoBehaviour:
     gridX: 0
     gridY: 0
     facingRight: 0
-  powered: 0
   fixedPosition: 0
-  canInteractOnPlay: 0
+  horizontal: 1

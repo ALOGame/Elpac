@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public enum ApplianceType { PowerSupply, PowerConsumer, VerticalWire, HorizontalWire }
+public enum ItemType { PowerSupply, PowerConsumer, VerticalWire, HorizontalWire }
 
 public abstract class Appliance : MonoBehaviour
 {
-    public ApplianceInfo info;
-
+    public ItemInfo info;
+    
     public bool powered;
 
+    protected EnType consumerableEnergyType;
     protected List<Energy> energies;
     protected bool interactableOnPlay;
 
@@ -21,31 +23,30 @@ public abstract class Appliance : MonoBehaviour
         energies = new List<Energy>();
     }
 
-    public void PowerOn()
+    public void EnergiesChanges(List<EnergyTrail> trails)
     {
-        powered = true;
-        OnPowered(powered);
-    }
+        IEnumerable<EnergyTrail> consumedEnergies = trails.Where(trail => (trail.Type == consumerableEnergyType));
 
-    public void PowerOff()
-    {
-        powered = false;
-        OnPowered(powered);
-    }
+        EnDirection finalDirection = EnDirection.None;
+        foreach (EnergyTrail trail in consumedEnergies)
+        {
+            finalDirection |= trail.Direction;
+        }
 
-    protected abstract void OnPowered(bool powered);
+        
+    }
 
     public virtual void InteractOnPlay() { }
 }
 
 [System.Serializable]
-public struct ApplianceInfo
+public struct ItemInfo
 {
-    public ApplianceType type;
+    public ItemType type;
     public int gridX, gridY;
     public bool facingRight;
 
-    public ApplianceInfo(ApplianceType type, int gridX, int gridY, bool facingRight)
+    public ItemInfo(ItemType type, int gridX, int gridY, bool facingRight)
     {
         this.type = type;
         this.gridX = gridX;

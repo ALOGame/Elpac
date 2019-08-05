@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class Level
 {
-    public List<ApplianceInfo> appliances;
+    public List<ItemInfo> appliances;
 
     public bool isLoaded { get; private set; }
 
     public Level(string path)
     {
-        appliances = new List<ApplianceInfo>();
+        appliances = new List<ItemInfo>();
 
         LoadFromFile(path);
     }
@@ -33,7 +33,7 @@ public class Level
         if (parameters.Length % 4 != 0)
             return;
 
-        ApplianceType type;
+        ItemType type;
         int gridX, gridY;
         bool facingRight;
 
@@ -41,7 +41,7 @@ public class Level
         {
             try
             {
-                type = (ApplianceType)int.Parse(parameters[i]);
+                type = (ItemType)int.Parse(parameters[i]);
                 gridX = int.Parse(parameters[i + 1]);
                 gridY = int.Parse(parameters[i + 2]);
 
@@ -52,7 +52,7 @@ public class Level
 
                 facingRight = bool.Parse(parameters[i + 3]);
 
-                appliances.Add(new ApplianceInfo(type, gridX, gridY, facingRight));
+                appliances.Add(new ItemInfo(type, gridX, gridY, facingRight));
             }
             catch // Don't care what type of exception is thrown. File is corrupted
             {

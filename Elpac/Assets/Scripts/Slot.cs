@@ -11,15 +11,45 @@ public class Slot : MonoBehaviour
     private Appliance appliance;
     public WireDirection wireDirection { get; private set; }
 
+    private List<EnergyTrail> energyTrails;
+
     public bool isOccupied { get { return appliance != null; } }
+
+    private void Awake()
+    {
+        energyTrails = new List<EnergyTrail>();
+    }
 
     public void SetAppliance(Appliance appliance)
     {
         this.appliance = appliance;
     }
 
-    public void AddEnergyTrail(EnergyTrail trail)
+    public void AddWireDirection(WireDirection direction)
     {
+        wireDirection |= direction;
+    }
 
+    public void AddEnergyTrail(EnergyTrail trail, Energy caller)
+    {
+        energyTrails.Add(trail);
+        UpdateItems(caller);
+    }
+
+    private void UpdateItems(Energy caller)
+    {
+        List<Energy> updatedEnergies = new List<Energy>();
+        updatedEnergies.Add(caller);
+
+        foreach (EnergyTrail trail in energyTrails)
+        {
+            if (!updatedEnergies.Contains(trail.Energy))
+            {
+                trail.Energy.UpdateTrail();
+                updatedEnergies.Add(trail.Energy);
+            }
+        }
+
+        appliance?.EnergiesChanges(energyTrails);
     }
 }

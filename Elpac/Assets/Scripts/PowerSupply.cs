@@ -39,9 +39,4 @@ public class PowerSupply : Appliance
     {
         energies.Add(new Electricity(info.gridX, info.gridY));
     }
-
-    protected override void OnPowered(bool powered)
-    {
-
-    }
 }

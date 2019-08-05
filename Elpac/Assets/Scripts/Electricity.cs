@@ -38,7 +38,9 @@ public class Electricity : Energy
 
         foreach (Vector2Int position in closedSet)
         {
-            SlotGrid.AddEnergyTrailToSlot(position.x, position.y, new EnergyTrail(energyType, EnDirection.None, this));
+            EnergyTrail newTrail = new EnergyTrail(energyType, EnDirection.None, this);
+            trail.Add(newTrail);
+            SlotGrid.AddEnergyTrailToSlot(position.x, position.y, newTrail, this);
         }
     }
 
@@ -72,11 +74,12 @@ public class Electricity : Energy
 
     public override void StopSpreading()
     {
-        
+
+        spreaded = false;
     }
 
     public override void UpdateTrail()
     {
-        
+        Debug.Log("trail updated");
     }
 }

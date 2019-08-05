@@ -15,14 +15,29 @@ public class PowerSupply : Appliance
     {
         if (!GameManager.gameRunning)
             return;
+
+        if (generatingPower)
+            Debug.Log("generating power " + energies.Count);
     }
 
     public override void InteractOnPlay()
     {
         if (generatingPower)
-            SlotGrid.instance.PowerSlotOff(info.gridX, info.gridY);
+            TurnPowerOff();
         else
-            SlotGrid.instance.PowerSlotOn(info.gridX, info.gridY);
+            TurnPowerOn();
+
+        generatingPower = !generatingPower;
+    }
+
+    private void TurnPowerOff()
+    {
+        energies.Clear();
+    }
+
+    private void TurnPowerOn()
+    {
+        energies.Add(new Electricity(info.gridX, info.gridY));
     }
 
     protected override void OnPowered(bool powered)

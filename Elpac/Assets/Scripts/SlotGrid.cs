@@ -12,8 +12,6 @@ public class SlotGrid : MonoBehaviour
     public GameObject powerConsumer;
     public GameObject verticalWire;
     public GameObject horizontalWire;
-    public GameObject heater;
-    public GameObject powerGenerator;
 
     private Slot[,] slots;
 
@@ -24,7 +22,7 @@ public class SlotGrid : MonoBehaviour
     private readonly Vector2 leftCornerOffset = new Vector2(1, -1);
     private Vector3 cameraTopLeftPos;
 
-    public static SlotGrid instance;
+    private static SlotGrid instance;
 
     private void Awake()
     {
@@ -50,7 +48,7 @@ public class SlotGrid : MonoBehaviour
         }
     }
 
-    public void AddAppliances(HashSet<ApplianceInfo> appliances)
+    public void AddAppliances(List<ApplianceInfo> appliances)
     {
         Vector3 position;
         GameObject go;
@@ -70,28 +68,31 @@ public class SlotGrid : MonoBehaviour
         }
     }
 
-    private GameObject GetCorespondingAppliance(Appliance.Type type)
+    private GameObject GetCorespondingAppliance(ApplianceType type)
     {
         switch (type)
         {
-            case Appliance.Type.PowerSupply:
+            case ApplianceType.PowerSupply:
                 return powerSupply;
-            case Appliance.Type.PowerConsumer:
+            case ApplianceType.PowerConsumer:
                 return powerConsumer;
-            case Appliance.Type.VerticalWire:
+            case ApplianceType.VerticalWire:
                 return verticalWire;
-            case Appliance.Type.HorizontalWire:
+            case ApplianceType.HorizontalWire:
                 return horizontalWire;
-            case Appliance.Type.Heater:
-                return heater;
-            case Appliance.Type.PowerGenerator:
-                return powerGenerator;
             default:
                 Debug.Log("GameGrid: Appliance is not implemented yet (" + type + ")");
                 return null;
         }
     }
 
-    public void PowerSlotOn(byte xGrid, byte yGrid) => slots[xGrid, yGrid].PowerOn();
-    public void PowerSlotOff(byte xGrid, byte yGrid) => slots[xGrid, yGrid].PowerOff();
+    public static void AddEnergyTrailToSlot(int xGrid, int yGrid, EnergyTrail trail) => instance.slots[xGrid, yGrid].AddEnergyTrail(trail);
+
+    public static WireDirection GetWireDirection(int xGrid, int yGrid)
+    {
+        if (xGrid < 0 || xGrid >= instance.slots.GetLength(0) || yGrid < 0 || yGrid >= instance.slots.GetLength(1))
+            return WireDirection.None;
+
+        return instance.slots[xGrid, yGrid].wireDirection;
+    }
 }

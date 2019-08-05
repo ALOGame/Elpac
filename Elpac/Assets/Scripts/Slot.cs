@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Flags]
-public enum WireDirection { Right = 1, Left = 2, Up = 4, Down = 8 }
+public enum WireDirection { None = 0, Right = 1, Left = 2, Up = 4, Down = 8 }
 
 public class Slot : MonoBehaviour
 {
     private Appliance appliance;
-    public WireDirection wire { get; private set; }
+    public WireDirection wireDirection { get; private set; }
 
     public bool isOccupied { get { return appliance != null; } }
 
@@ -18,13 +18,8 @@ public class Slot : MonoBehaviour
         this.appliance = appliance;
     }
 
-    public void PowerOn()
+    public void AddEnergyTrail(EnergyTrail trail)
     {
-        appliance.PowerOn();
-    }
 
-    public void PowerOff()
-    {
-        appliance.PowerOff();
     }
 }

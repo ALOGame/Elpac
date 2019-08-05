@@ -5413,10 +5413,10 @@ MonoBehaviour:
     type: 3}
   powerConsumer: {fileID: 986155901409782438, guid: 9693680e5ba04cb409f6ab3e15fcf969,
     type: 3}
-  verticalWire: {fileID: 0}
-  horizontalWire: {fileID: 0}
-  heater: {fileID: 5884463862045961938, guid: 86f9513ef0198b944a72f311e697c98e, type: 3}
-  powerGenerator: {fileID: 0}
+  verticalWire: {fileID: 5725063655921314377, guid: adfcb70c39711514ca858f71dfc1103f,
+    type: 3}
+  horizontalWire: {fileID: 6800190078007776005, guid: 46e59fcd5e2096a4d981e217fdeaa1cf,
+    type: 3}
 --- !u!4 &1214996539
 Transform:
   m_ObjectHideFlags: 0

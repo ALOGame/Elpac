@@ -8,9 +8,4 @@ public class PowerConsumer : Appliance
     {
         consumerableEnergyType = EnType.Electric;
     }
-
-    private void Update()
-    {
-        Debug.Log("powering consumer!!!");
-    }
 }

@@ -12,7 +12,7 @@ public abstract class Appliance : MonoBehaviour
     public bool powered;
 
     protected EnType consumerableEnergyType;
-    protected List<Energy> energies;
+    protected List<Energy> producedEnergies;
     protected bool interactableOnPlay;
 
     public bool fixedPosition;
@@ -20,20 +20,38 @@ public abstract class Appliance : MonoBehaviour
 
     private void Awake()
     {
-        energies = new List<Energy>();
+        producedEnergies = new List<Energy>();
     }
 
-    public void EnergiesChanges(List<EnergyTrail> trails)
+    public void EnergiesChanges(List<EnergyTrail> trails, Energy caller)
     {
-        IEnumerable<EnergyTrail> consumedEnergies = trails.Where(trail => (trail.Type == consumerableEnergyType));
+        if (producedEnergies.Contains(caller))
+            return;
+
+        IEnumerable<EnergyTrail> consumedEnergies = trails.Where(trail => trail.type == consumerableEnergyType);
+
+        if (consumedEnergies.Count() == 0)
+            return;
 
         EnDirection finalDirection = EnDirection.None;
         foreach (EnergyTrail trail in consumedEnergies)
         {
-            finalDirection |= trail.Direction;
+            finalDirection |= trail.direction;
         }
 
-        
+        if (finalDirection.HasFlag(EnDirection.Right) && finalDirection.HasFlag(EnDirection.Left))
+        {
+            finalDirection &= ~(EnDirection.Right | EnDirection.Left);
+        }
+        if (finalDirection.HasFlag(EnDirection.Up) && finalDirection.HasFlag(EnDirection.Down))
+        {
+            finalDirection &= ~(EnDirection.Up | EnDirection.Down);
+        }
+
+        if (finalDirection != EnDirection.None || (consumerableEnergyType == EnType.Electric && consumedEnergies.Count(trail => trail.type == EnType.Electric) > 0))
+        {
+            Debug.Log("consuming energy");
+        }
     }
 
     public virtual void InteractOnPlay() { }

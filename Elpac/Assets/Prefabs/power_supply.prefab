@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8624919386280148404}
   - component: {fileID: 6210118175206092725}
   - component: {fileID: 4675015151427086803}
-  - component: {fileID: 2622508501542186354}
+  - component: {fileID: 5558123698235401823}
   m_Layer: 0
   m_Name: power_supply
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4622872320483726790}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.9481955, y: -0.95419186, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ef2db47c475388b4499916f73d3de956, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   powered: 0
   fixedPosition: 0
   canInteractOnPlay: 0
---- !u!61 &2622508501542186354
+--- !u!61 &5558123698235401823
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,5 +126,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0

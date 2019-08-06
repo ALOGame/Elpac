@@ -32,6 +32,5 @@ public class LevelLoader
     public void LoadLevel(string levelPath)
     {
         loadedLevel = new Level(levelPath);
-        Debug.Log(loadedLevel.appliances.Count);
     }
 }

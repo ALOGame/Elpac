@@ -9,14 +9,17 @@ public enum EnDirection { None = 0, Right = 1, Left = 2, Up = 4, Down = 8 }
 
 public struct EnergyTrail
 {
-    public EnType Type { get; private set; }
-    public EnDirection Direction { get; private set; }
-    public Energy Energy { get; private set; }
+    public Vector2Int gridPos { get; private set; }
+    public EnType type { get; private set; }
+    public EnDirection direction { get; private set; }
+    public Energy energy { get; private set; }
+    
 
-    public EnergyTrail(EnType type, EnDirection direction, Energy energy)
+    public EnergyTrail(Vector2Int gridPos, EnType type, EnDirection direction, Energy energy)
     {
-        Type = type;
-        Direction = direction;
-        Energy = energy;
+        this.gridPos = gridPos;
+        this.type = type;
+        this.direction = direction;
+        this.energy = energy;
     }
 }

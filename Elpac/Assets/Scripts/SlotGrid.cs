@@ -111,6 +111,7 @@ public class SlotGrid : MonoBehaviour
     }
 
     public static void AddEnergyTrailToSlot(int xGrid, int yGrid, EnergyTrail trail, Energy caller) => instance.slots[xGrid, yGrid].AddEnergyTrail(trail, caller);
+    public static void RemoveEnergyTrailFromSlot(int xGrid, int yGrid, EnergyTrail trail) => instance.slots[xGrid, yGrid].RemoveEnergyTrail(trail);
 
     public static WireDirection GetWireDirection(int xGrid, int yGrid)
     {

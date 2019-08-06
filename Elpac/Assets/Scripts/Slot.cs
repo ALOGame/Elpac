@@ -36,20 +36,27 @@ public class Slot : MonoBehaviour
         UpdateItems(caller);
     }
 
+    public void RemoveEnergyTrail(EnergyTrail trail)
+    {
+        energyTrails.Remove(trail);
+        UpdateItems(null);
+    }
+
     private void UpdateItems(Energy caller)
     {
         List<Energy> updatedEnergies = new List<Energy>();
-        updatedEnergies.Add(caller);
+        if (caller != null)
+            updatedEnergies.Add(caller);
 
         foreach (EnergyTrail trail in energyTrails)
         {
-            if (!updatedEnergies.Contains(trail.Energy))
+            if (!updatedEnergies.Contains(trail.energy))
             {
-                trail.Energy.UpdateTrail();
-                updatedEnergies.Add(trail.Energy);
+                trail.energy.UpdateTrail();
+                updatedEnergies.Add(trail.energy);
             }
         }
 
-        appliance?.EnergiesChanges(energyTrails);
+        appliance?.EnergiesChanges(energyTrails, caller);
     }
 }

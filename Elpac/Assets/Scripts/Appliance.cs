@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemType { PowerSupply, PowerConsumer, VerticalWire, HorizontalWire }
+public enum ItemType { unknown, PowerSupply, PowerConsumer, VerticalWire, HorizontalWire }
 
 public abstract class Appliance : MonoBehaviour
 {

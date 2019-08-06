@@ -5,17 +5,16 @@ using UnityEngine;
 public abstract class Energy
 {
     public EnType energyType;
-    protected int xPosGrid, yPosGrid;
+    protected Vector2Int gridPos;
     protected List<EnergyTrail> trails;
-    protected List<Energy> influatingEnergies; // We couldn't find the proper variable name for it. It's a list of energies that influence this energy
+    protected List<Energy> affectingEnergies;
 
-    public Energy(EnType type, int xPosGrid, int yPosGrid)
+    public Energy(EnType type, Vector2Int gridPos)
     {
         energyType = type;
-        this.xPosGrid = xPosGrid;
-        this.yPosGrid = yPosGrid;
+        this.gridPos = gridPos;
         trails = new List<EnergyTrail>();
-        influatingEnergies = new List<Energy>();
+        affectingEnergies = new List<Energy>();
     }
 
     protected void ClearTrailList()

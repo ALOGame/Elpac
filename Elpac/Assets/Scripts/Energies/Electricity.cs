@@ -6,7 +6,7 @@ public class Electricity : Energy
 {
     private bool spreaded;
 
-    public Electricity (int xPosGrid, int yPosGrid) : base(EnType.Electric, xPosGrid, yPosGrid) { }
+    public Electricity (Vector2Int gridPos) : base(EnType.Electric, gridPos) { }
 
     public override void Spread()
     {
@@ -16,7 +16,7 @@ public class Electricity : Energy
 
         Queue<Vector2Int> openSet = new Queue<Vector2Int>();
         List<Vector2Int> closedSet = new List<Vector2Int>();
-        openSet.Enqueue(new Vector2Int(xPosGrid, yPosGrid));
+        openSet.Enqueue(gridPos);
 
         WireDirection wireDirection;
         Vector2Int currPos;

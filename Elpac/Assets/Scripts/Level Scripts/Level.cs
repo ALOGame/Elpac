@@ -25,6 +25,7 @@ public class Level
         {
             parameters = File.ReadAllText(path).Split(';');
         }
+
         catch
         {
             return;

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnType { Electric, Light, Wind, Laser, Heat, Steam, Water }
+public enum EnType { Electric, Light, Wind, Laser, Heat, Steam, Water, Mechanical }
 [Flags]
 public enum EnDirection { None = 0, Right = 1, Left = 2, Up = 4, Down = 8 }
 

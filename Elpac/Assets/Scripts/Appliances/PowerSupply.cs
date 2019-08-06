@@ -14,7 +14,7 @@ public class PowerSupply : Appliance
     private void Start()
     {
         canInteractOnPlay = true;
-        producedElectricity = new Electricity(info.gridX, info.gridY);
+        producedElectricity = new Electricity(new Vector2Int(info.gridX, info.gridY));
         producedEnergies.Add(producedElectricity);
 
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();

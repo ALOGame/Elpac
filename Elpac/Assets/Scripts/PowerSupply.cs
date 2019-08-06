@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class PowerSupply : Appliance
 {
+    public Sprite spritePowerOn, spritePowerOff;
+
+    private SpriteRenderer spriteRenderer;
+
     private bool generatingPower;
+    private Energy producedElectricity;
 
     private void Start()
     {
         canInteractOnPlay = true;
+        producedElectricity = new Electricity(info.gridX, info.gridY);
+        producedEnergies.Add(producedElectricity);
+
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
@@ -17,7 +26,9 @@ public class PowerSupply : Appliance
             return;
 
         if (generatingPower)
-            Debug.Log("generating power " + energies.Count);
+        {
+            Debug.Log("generating power " + producedEnergies.Count);
+        }
     }
 
     public override void InteractOnPlay()
@@ -32,16 +43,13 @@ public class PowerSupply : Appliance
 
     private void TurnPowerOff()
     {
-        energies.Clear();
+        producedElectricity.StopSpreading();
+        spriteRenderer.sprite = spritePowerOff;
     }
 
     private void TurnPowerOn()
     {
-        energies.Add(new Electricity(info.gridX, info.gridY));
-    }
-
-    protected override void OnPowered(bool powered)
-    {
-
+        producedElectricity.Spread();
+        spriteRenderer.sprite = spritePowerOn;
     }
 }

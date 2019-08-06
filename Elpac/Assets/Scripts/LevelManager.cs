@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
 
     private void CreateAppliances()
     {
-        slotGrid.AddAppliances(levelLoader.loadedLevel.appliances);
+        slotGrid.AddItems(levelLoader.loadedLevel.appliances);
     }
 
     private void Update()

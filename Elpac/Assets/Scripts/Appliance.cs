@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public enum ApplianceType { PowerSupply, PowerConsumer, VerticalWire, HorizontalWire }
+public enum ItemType { PowerSupply, PowerConsumer, VerticalWire, HorizontalWire }
 
 public abstract class Appliance : MonoBehaviour
 {
-    public ApplianceInfo info;
-
+    public ItemInfo info;
+    
     public bool powered;
 
-    protected List<Energy> energies;
+    protected EnType consumerableEnergyType;
+    protected List<Energy> producedEnergies;
     protected bool interactableOnPlay;
 
     public bool fixedPosition;
@@ -18,34 +20,51 @@ public abstract class Appliance : MonoBehaviour
 
     private void Awake()
     {
-        energies = new List<Energy>();
+        producedEnergies = new List<Energy>();
     }
 
-    public void PowerOn()
+    public void EnergiesChanges(List<EnergyTrail> trails, Energy caller)
     {
-        powered = true;
-        OnPowered(powered);
-    }
+        if (producedEnergies.Contains(caller))
+            return;
 
-    public void PowerOff()
-    {
-        powered = false;
-        OnPowered(powered);
-    }
+        IEnumerable<EnergyTrail> consumedEnergies = trails.Where(trail => trail.type == consumerableEnergyType);
 
-    protected abstract void OnPowered(bool powered);
+        if (consumedEnergies.Count() == 0)
+            return;
+
+        EnDirection finalDirection = EnDirection.None;
+        foreach (EnergyTrail trail in consumedEnergies)
+        {
+            finalDirection |= trail.direction;
+        }
+
+        if (finalDirection.HasFlag(EnDirection.Right) && finalDirection.HasFlag(EnDirection.Left))
+        {
+            finalDirection &= ~(EnDirection.Right | EnDirection.Left);
+        }
+        if (finalDirection.HasFlag(EnDirection.Up) && finalDirection.HasFlag(EnDirection.Down))
+        {
+            finalDirection &= ~(EnDirection.Up | EnDirection.Down);
+        }
+
+        if (finalDirection != EnDirection.None || (consumerableEnergyType == EnType.Electric && consumedEnergies.Count(trail => trail.type == EnType.Electric) > 0))
+        {
+            Debug.Log("consuming energy");
+        }
+    }
 
     public virtual void InteractOnPlay() { }
 }
 
 [System.Serializable]
-public struct ApplianceInfo
+public struct ItemInfo
 {
-    public ApplianceType type;
+    public ItemType type;
     public int gridX, gridY;
     public bool facingRight;
 
-    public ApplianceInfo(ApplianceType type, int gridX, int gridY, bool facingRight)
+    public ItemInfo(ItemType type, int gridX, int gridY, bool facingRight)
     {
         this.type = type;
         this.gridX = gridX;

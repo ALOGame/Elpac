@@ -48,37 +48,61 @@ public class SlotGrid : MonoBehaviour
         }
     }
 
-    public void AddAppliances(List<ApplianceInfo> appliances)
+    public void AddItems(List<ItemInfo> appliances)
     {
         Vector3 position;
         GameObject go;
         Appliance appliance;
+        Wire wire;
 
-        foreach (ApplianceInfo info in appliances)
+        foreach (ItemInfo info in appliances)
         {
             position = new Vector3(leftCornerOffset.x + info.gridX * spacing.x, leftCornerOffset.y - info.gridY * spacing.y, 10);
             position += cameraTopLeftPos + new Vector3(2, -2, 0);
-            go = Instantiate(GetCorespondingAppliance(info.type), position, Quaternion.identity, transform);
+            go = Instantiate(GetCorespondingItem(info.type), position, Quaternion.identity, transform);
 
             appliance = go.GetComponent<Appliance>();
-            appliance.fixedPosition = true;
-            appliance.info = info;
+            wire = go.GetComponent<Wire>();
 
-            slots[info.gridX, info.gridY].SetAppliance(appliance);
+            if (appliance != null) // An appliance
+            {
+                appliance.fixedPosition = true;
+                appliance.info = info;
+
+                slots[info.gridX, info.gridY].SetAppliance(appliance);
+            }
+            else if (wire != null)
+            {
+                wire.fixedPosition = true;
+                wire.info = info;
+
+                if (wire.horizontal)
+                {
+                    slots[info.gridX, info.gridY].AddWireDirection(WireDirection.Right);
+                    slots[info.gridX + 1, info.gridY].AddWireDirection(WireDirection.Left);
+                } else
+                {
+                    slots[info.gridX, info.gridY].AddWireDirection(WireDirection.Down);
+                    slots[info.gridX, info.gridY + 1].AddWireDirection(WireDirection.Up);
+                }
+            } else
+            {
+                Debug.LogError("Instantiated GameObject does not have script");
+            }
         }
     }
 
-    private GameObject GetCorespondingAppliance(ApplianceType type)
+    private GameObject GetCorespondingItem(ItemType type)
     {
         switch (type)
         {
-            case ApplianceType.PowerSupply:
+            case ItemType.PowerSupply:
                 return powerSupply;
-            case ApplianceType.PowerConsumer:
+            case ItemType.PowerConsumer:
                 return powerConsumer;
-            case ApplianceType.VerticalWire:
+            case ItemType.VerticalWire:
                 return verticalWire;
-            case ApplianceType.HorizontalWire:
+            case ItemType.HorizontalWire:
                 return horizontalWire;
             default:
                 Debug.Log("GameGrid: Appliance is not implemented yet (" + type + ")");
@@ -86,7 +110,8 @@ public class SlotGrid : MonoBehaviour
         }
     }
 
-    public static void AddEnergyTrailToSlot(int xGrid, int yGrid, EnergyTrail trail) => instance.slots[xGrid, yGrid].AddEnergyTrail(trail);
+    public static void AddEnergyTrailToSlot(int xGrid, int yGrid, EnergyTrail trail, Energy caller) => instance.slots[xGrid, yGrid].AddEnergyTrail(trail, caller);
+    public static void RemoveEnergyTrailFromSlot(int xGrid, int yGrid, EnergyTrail trail) => instance.slots[xGrid, yGrid].RemoveEnergyTrail(trail);
 
     public static WireDirection GetWireDirection(int xGrid, int yGrid)
     {

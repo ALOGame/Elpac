@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Wire : Appliance
+
+public class Wire : MonoBehaviour
 {
-    protected override void OnPowered(bool powered) {}
+    public ItemInfo info;
+
+    public bool fixedPosition;
+    public bool horizontal;
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PowerConsumer : Appliance
 {
-    protected override void OnPowered(bool powered)
+    private void Start()
     {
-        Debug.Log("power suppply powered");
+        consumerableEnergyType = EnType.Electric;
     }
 }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PowerSupply : Appliance
 {
+    public Sprite spritePowerOn, spritePowerOff;
+
+    private SpriteRenderer spriteRenderer;
+
     private bool generatingPower;
     private Energy producedElectricity;
 
@@ -12,6 +16,8 @@ public class PowerSupply : Appliance
         canInteractOnPlay = true;
         producedElectricity = new Electricity(info.gridX, info.gridY);
         producedEnergies.Add(producedElectricity);
+
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
@@ -38,10 +44,12 @@ public class PowerSupply : Appliance
     private void TurnPowerOff()
     {
         producedElectricity.StopSpreading();
+        spriteRenderer.sprite = spritePowerOff;
     }
 
     private void TurnPowerOn()
     {
         producedElectricity.Spread();
+        spriteRenderer.sprite = spritePowerOn;
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 public class Slot : MonoBehaviour
 {
     private Appliance appliance;
+    private Wire[] wires;
+
     public WireDirection wireDirection { get; private set; }
 
     private List<EnergyTrail> energyTrails;
@@ -15,11 +17,20 @@ public class Slot : MonoBehaviour
     private void Awake()
     {
         energyTrails = new List<EnergyTrail>();
+        wires = new Wire[2];
     }
 
     public void SetAppliance(Appliance appliance)
     {
         this.appliance = appliance;
+    }
+
+    public void AddWire(Wire wire)
+    {
+        if (wires[0] == null)
+            wires[0] = wire;
+        else
+            wires[1] = wire;
     }
 
     public void AddWireDirection(WireDirection direction)
@@ -55,5 +66,10 @@ public class Slot : MonoBehaviour
         }
 
         appliance?.EnergiesChanges(energyTrails, caller);
+
+        foreach (Wire wire in wires)
+        {
+            wire?.EnergiesChanged(updatedEnergies);
+        }
     }
 }

@@ -57,7 +57,7 @@ public class SlotGrid : MonoBehaviour
 
         foreach (ItemInfo info in appliances)
         {
-            position = new Vector3(leftCornerOffset.x + info.gridX * spacing.x, leftCornerOffset.y - info.gridY * spacing.y, 10);
+            position = new Vector3(leftCornerOffset.x + info.gridPos.x * spacing.x, leftCornerOffset.y - info.gridPos.y * spacing.y, 10);
             position += cameraTopLeftPos + new Vector3(2, -2, 0);
             go = Instantiate(GetCorespondingItem(info.type), position, Quaternion.identity, transform);
 
@@ -69,7 +69,7 @@ public class SlotGrid : MonoBehaviour
                 appliance.fixedPosition = true;
                 appliance.info = info;
 
-                slots[info.gridX, info.gridY].SetAppliance(appliance);
+                slots[info.gridPos.x, info.gridPos.y].SetAppliance(appliance);
             }
             else if (wire != null)
             {
@@ -78,12 +78,12 @@ public class SlotGrid : MonoBehaviour
 
                 if (wire.horizontal)
                 {
-                    slots[info.gridX, info.gridY].AddWireDirection(WireDirection.Right);
-                    slots[info.gridX + 1, info.gridY].AddWireDirection(WireDirection.Left);
+                    slots[info.gridPos.x, info.gridPos.y].AddWireDirection(WireDirection.Right);
+                    slots[info.gridPos.x + 1, info.gridPos.y].AddWireDirection(WireDirection.Left);
                 } else
                 {
-                    slots[info.gridX, info.gridY].AddWireDirection(WireDirection.Down);
-                    slots[info.gridX, info.gridY + 1].AddWireDirection(WireDirection.Up);
+                    slots[info.gridPos.x, info.gridPos.y].AddWireDirection(WireDirection.Down);
+                    slots[info.gridPos.x, info.gridPos.y + 1].AddWireDirection(WireDirection.Up);
                 }
             } else
             {

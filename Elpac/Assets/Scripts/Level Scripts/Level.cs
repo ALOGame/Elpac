@@ -53,7 +53,7 @@ public class Level
 
                 facingRight = bool.Parse(parameters[i + 3]);
 
-                appliances.Add(new ItemInfo(type, gridX, gridY, facingRight));
+                appliances.Add(new ItemInfo(type, new Vector2Int(gridX, gridY), facingRight));
             }
             catch // Don't care what type of exception is thrown. File is corrupted
             {

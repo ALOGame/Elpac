@@ -4,8 +4,24 @@ using UnityEngine;
 
 public class PowerConsumer : Appliance
 {
-    private void Start()
+    protected override void PowerStateChanged()
     {
-        consumerableEnergyType = EnType.Electric;
+        if (powered)
+        {
+            PowerOn();
+        } else
+        {
+            PowerOff();
+        }
+    }
+
+    private void PowerOn()
+    {
+        Debug.Log("power consumer powered");
+    }
+
+    private void PowerOff()
+    {
+        Debug.Log("power consumer unpowered");
     }
 }

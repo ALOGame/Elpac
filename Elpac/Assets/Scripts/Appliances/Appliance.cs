@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemType { unknown, PowerSupply, PowerConsumer, VerticalWire, HorizontalWire }
+public enum ItemType { unknown, PowerSupply, PowerConsumer, VerticalWire, HorizontalWire, VerticalDecorativeWire, HorizontalDecorativeWire}
 
 public abstract class Appliance : MonoBehaviour
 {
     public ItemInfo info;
     
-    public bool powered;
+    protected bool powered;
 
     protected EnType consumerableEnergyType;
     protected List<Energy> producedEnergies;
@@ -50,10 +50,17 @@ public abstract class Appliance : MonoBehaviour
 
         if (finalDirection != EnDirection.None || (consumerableEnergyType == EnType.Electric && consumedEnergies.Count(trail => trail.type == EnType.Electric) > 0))
         {
-            Debug.Log("consuming energy");
+            powered = true;
         }
+        else
+        {
+            powered = false;
+        }
+
+        PowerStateChanged();
     }
 
+    protected virtual void PowerStateChanged() { }
     public virtual void InteractOnPlay() { }
 }
 
@@ -61,14 +68,13 @@ public abstract class Appliance : MonoBehaviour
 public struct ItemInfo
 {
     public ItemType type;
-    public int gridX, gridY;
+    public Vector2Int gridPos;
     public bool facingRight;
 
-    public ItemInfo(ItemType type, int gridX, int gridY, bool facingRight)
+    public ItemInfo(ItemType type, Vector2Int gridPos, bool facingRight)
     {
         this.type = type;
-        this.gridX = gridX;
-        this.gridY = gridY;
+        this.gridPos = gridPos;
         this.facingRight = facingRight;
     }
 }

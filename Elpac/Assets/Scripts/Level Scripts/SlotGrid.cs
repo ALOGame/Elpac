@@ -5,14 +5,7 @@ using UnityEngine.UI;
 
 public class SlotGrid : MonoBehaviour
 {
-    public GameObject slot;
-
-    [Space]
-    public GameObject powerSupply;
-    public GameObject powerConsumer;
-    public GameObject verticalWire;
-    public GameObject horizontalWire;
-
+    public GameObject slot;    
     private Slot[,] slots;
 
     private const byte xCount = 10;
@@ -57,37 +50,51 @@ public class SlotGrid : MonoBehaviour
 
         foreach (ItemInfo info in appliances)
         {
-            position = new Vector3(leftCornerOffset.x + info.gridPos.x * spacing.x, leftCornerOffset.y - info.gridPos.y * spacing.y, 10);
-            position += cameraTopLeftPos + new Vector3(2, -2, 0);
-            go = Instantiate(GetCorespondingItem(info.type), position, Quaternion.identity, transform);
-
-            appliance = go.GetComponent<Appliance>();
-            wire = go.GetComponent<Wire>();
-
-            if (appliance != null) // An appliance
+            if (info.loaded)
             {
-                appliance.fixedPosition = true;
-                appliance.info = info;
+                position = new Vector3(leftCornerOffset.x + info.gridPos.x * spacing.x, leftCornerOffset.y - info.gridPos.y * spacing.y, 10);
+                position += cameraTopLeftPos + new Vector3(2, -2, 0);
+                go = Instantiate(GetCorespondingItem(info.type), position, Quaternion.identity, transform);
 
-                slots[info.gridPos.x, info.gridPos.y].SetAppliance(appliance);
-            }
-            else if (wire != null)
-            {
-                wire.fixedPosition = true;
-                wire.info = info;
+                appliance = go.GetComponent<Appliance>();
+                wire = go.GetComponent<Wire>();
 
-                if (wire.horizontal)
+                if (appliance != null) // An appliance
                 {
-                    slots[info.gridPos.x, info.gridPos.y].AddWireDirection(WireDirection.Right);
-                    slots[info.gridPos.x + 1, info.gridPos.y].AddWireDirection(WireDirection.Left);
-                } else
-                {
-                    slots[info.gridPos.x, info.gridPos.y].AddWireDirection(WireDirection.Down);
-                    slots[info.gridPos.x, info.gridPos.y + 1].AddWireDirection(WireDirection.Up);
+                    appliance.fixedPosition = true;
+                    appliance.info = info;
+
+                    slots[info.gridPos.x, info.gridPos.y].SetAppliance(appliance);
                 }
-            } else
+                else if (wire != null)
+                {
+                    wire.fixedPosition = true;
+                    wire.info = info;
+
+                    if (wire.horizontal)
+                    {
+                        slots[info.gridPos.x, info.gridPos.y].AddWireDirection(WireDirection.Right);
+                        slots[info.gridPos.x + 1, info.gridPos.y].AddWireDirection(WireDirection.Left);
+                    }
+                    else
+                    {
+                        slots[info.gridPos.x, info.gridPos.y].AddWireDirection(WireDirection.Down);
+                        slots[info.gridPos.x, info.gridPos.y + 1].AddWireDirection(WireDirection.Up);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Instantiated GameObject does not have script");
+                }
+            }
+
+            else
             {
-                Debug.LogError("Instantiated GameObject does not have script");
+                string paramdump = "";
+                foreach (object param in info.itemData)
+                    paramdump += (" " + param.ToString());
+
+                Debug.LogError("Isufficient or errorneous Item parameters -" + paramdump);
             }
         }
     }
@@ -97,13 +104,13 @@ public class SlotGrid : MonoBehaviour
         switch (type)
         {
             case ItemType.PowerSupply:
-                return powerSupply;
+                return ItemManager.PowerSupply();
             case ItemType.PowerConsumer:
-                return powerConsumer;
+                return ItemManager.Target();
             case ItemType.VerticalWire:
-                return verticalWire;
+                return ItemManager.VerticalWire();
             case ItemType.HorizontalWire:
-                return horizontalWire;
+                return ItemManager.HorizontalWire();
             default:
                 Debug.Log("GameGrid: Appliance is not implemented yet (" + type + ")");
                 return null;

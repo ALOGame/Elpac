@@ -67,14 +67,18 @@ public abstract class Appliance : MonoBehaviour
 [System.Serializable]
 public struct ItemInfo
 {
+    public bool loaded;
     public ItemType type;
     public Vector2Int gridPos;
     public bool facingRight;
+    public object[] itemData;
 
-    public ItemInfo(ItemType type, Vector2Int gridPos, bool facingRight)
+    public ItemInfo(bool loaded, ItemType type, Vector2Int gridPos, bool facingRight, object[] itemData)
     {
+        this.loaded = loaded;
         this.type = type;
         this.gridPos = gridPos;
         this.facingRight = facingRight;
+        this.itemData = itemData;
     }
 }

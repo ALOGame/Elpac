@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -18,12 +19,12 @@ public class Level
 
     private void LoadFromFile(string path)
     {
-        string[] parameters;
-        Dictionary<int, int> usedGridCoords = new Dictionary<int, int>();
+        string[] items;
+        List<Tuple<int, int>> usedGridCoords = new List<Tuple<int, int>>();
 
         try
         {
-            parameters = File.ReadAllText(path).Split(';');
+            items = File.ReadAllLines(path);
         }
 
         catch
@@ -31,34 +32,53 @@ public class Level
             return;
         }
 
-        if (parameters.Length % 4 != 0)
-            return;
 
-        ItemType type;
-        int gridX, gridY;
-        bool facingRight;
-
-        for (int i = 0; i < parameters.Length; i += 4)
+        foreach (string item in items)
         {
-            try
+            int type = 0;
+            int gridX = -1, gridY = -1;
+            bool facingRight = false;
+            bool loaded = false;
+            object[] itemData = new object[0];
+
+            //if (usedGridCoords.ContainsKey(gridX) && usedGridCoords[gridX] == gridY) // Check if the position in grid is already occupied. If so file is corrupted
+            //return;
+            //usedGridCoords.Add(gridX, gridY);
+
+            string[] parameters = item.Split(';');
+            if (parameters.Length >= 4)
             {
-                type = (ItemType)int.Parse(parameters[i]);
-                gridX = int.Parse(parameters[i + 1]);
-                gridY = int.Parse(parameters[i + 2]);
+                loaded = true;
+                try
+                {
+                    int.TryParse(parameters[0], out type);
+                    int.TryParse(parameters[1], out gridX);
+                    int.TryParse(parameters[2], out gridY);
+                    bool.TryParse(parameters[3], out facingRight);
+                    
+                    if (parameters.Length > 4)
+                    {
+                        int lendiff = parameters.Length - 4;
+                        itemData = new object[lendiff];
+                        for (int i = 0; i < itemData.Length; i++)
+                        {
+                            itemData[i] = parameters[i + 4];
+                        }
+                    }
+                }
 
-                //if (usedGridCoords.ContainsKey(gridX) && usedGridCoords[gridX] == gridY) // Check if the position in grid is already occupied. If so file is corrupted
-                    //return;
-
-                //usedGridCoords.Add(gridX, gridY);
-
-                facingRight = bool.Parse(parameters[i + 3]);
-
-                appliances.Add(new ItemInfo(type, new Vector2Int(gridX, gridY), facingRight));
+                catch
+                {
+                    loaded = false;
+                }
             }
-            catch // Don't care what type of exception is thrown. File is corrupted
+
+            if (!loaded)
             {
-                return;
+                itemData = parameters;
             }
+
+            appliances.Add(new ItemInfo(loaded, (ItemType)type, new Vector2Int(gridX, gridY), facingRight, itemData));
         }
 
         isLoaded = true;

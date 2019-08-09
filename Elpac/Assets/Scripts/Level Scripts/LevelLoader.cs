@@ -16,6 +16,7 @@ public class LevelLoader
     public LevelLoader()
     {
         PrepareSelf();
+        loadedLevel = new Level();
     }
 
     private void PrepareSelf()
@@ -31,6 +32,6 @@ public class LevelLoader
 
     public void LoadLevel(string levelPath)
     {
-        loadedLevel = new Level(levelPath);
+        loadedLevel.LoadFromFile(levelPath);
     }
 }

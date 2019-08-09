@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemType { unknown, PowerSupply, PowerConsumer, VerticalWire, HorizontalWire, VerticalDecorativeWire, HorizontalDecorativeWire}
+public enum ItemType { UnKnown, PowerSupply, PowerConsumer, VerticalWire, HorizontalWire, Fan}
 
 public abstract class Appliance : MonoBehaviour
 {
-    public ItemInfo info;
+    public ItemData data;
     
     protected bool powered;
 
@@ -30,42 +30,38 @@ public abstract class Appliance : MonoBehaviour
 
         IEnumerable<EnergyTrail> consumedEnergies = trails.Where(trail => trail.type == consumerableEnergyType);
 
-        if (consumedEnergies.Count() == 0)
-            return;
-
-        EnDirection finalDirection = EnDirection.None;
+        Direction finalDirection = Direction.None;
         foreach (EnergyTrail trail in consumedEnergies)
         {
             finalDirection |= trail.direction;
         }
 
-        if (finalDirection.HasFlag(EnDirection.Right) && finalDirection.HasFlag(EnDirection.Left))
+        if (finalDirection.HasFlag(Direction.Right) && finalDirection.HasFlag(Direction.Left))
         {
-            finalDirection &= ~(EnDirection.Right | EnDirection.Left);
+            finalDirection &= ~(Direction.Right | Direction.Left);
         }
-        if (finalDirection.HasFlag(EnDirection.Up) && finalDirection.HasFlag(EnDirection.Down))
+        if (finalDirection.HasFlag(Direction.Up) && finalDirection.HasFlag(Direction.Down))
         {
-            finalDirection &= ~(EnDirection.Up | EnDirection.Down);
+            finalDirection &= ~(Direction.Up | Direction.Down);
         }
 
-        if (finalDirection != EnDirection.None || (consumerableEnergyType == EnType.Electric && consumedEnergies.Count(trail => trail.type == EnType.Electric) > 0))
+        if (finalDirection != Direction.None || (consumerableEnergyType == EnType.Electric && consumedEnergies.Count(trail => trail.type == EnType.Electric) > 0)) // Electric energy has EnDirection.None
         {
-            powered = true;
+            PowerOn();
         }
         else
         {
-            powered = false;
+            PowerOff();
         }
-
-        PowerStateChanged();
     }
 
-    protected virtual void PowerStateChanged() { }
+    protected virtual void PowerOn() { }
+    protected virtual void PowerOff() { }
     public virtual void InteractOnPlay() { }
+    protected abstract void Start(); // Forcing inhereted members to implement Start method so they won't forget to inicialize consumable energy type and producing energies
 }
 
-[System.Serializable]
-public struct ItemInfo
+public struct ItemData
 {
     public bool loaded;
     public ItemType type;
@@ -73,7 +69,7 @@ public struct ItemInfo
     public bool facingRight;
     public object[] itemData;
 
-    public ItemInfo(bool loaded, ItemType type, Vector2Int gridPos, bool facingRight, object[] itemData)
+    public ItemData(bool loaded, ItemType type, Vector2Int gridPos, bool facingRight, object[] itemData)
     {
         this.loaded = loaded;
         this.type = type;

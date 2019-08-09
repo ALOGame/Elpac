@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8724052924424616245}
-  - component: {fileID: 3135392870170196436}
+  - component: {fileID: 4228714133187375050}
   m_Layer: 0
   m_Name: horizontal_wire
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3135392870170196436
+--- !u!114 &4228714133187375050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,16 +41,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6800190078007776005}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b2a1e9fb1b846f469ff9bc3c6894875, type: 3}
+  m_Script: {fileID: 11500000, guid: b0edd2ab49f7aff478dcd611381ac53e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info:
-    type: 0
-    gridX: 0
-    gridY: 0
-    facingRight: 0
   fixedPosition: 0
-  horizontal: 1
+  horizontal: 0
+  horizontalWireOn: {fileID: 21300000, guid: 5b3f9904077f83b46886518b80b751dc, type: 3}
+  horizontalWireOff: {fileID: 21300000, guid: 147cff530f0dc1c4db8599009559039e, type: 3}
+  horizontalDecorativeWireOn: {fileID: 21300000, guid: 3116d933b435b8649b4b99f109957377,
+    type: 3}
+  horizontalDecorativeWireOff: {fileID: 21300000, guid: 567cf174c6cc2fe468a997f5ef94118c,
+    type: 3}
 --- !u!1 &7299967339262070451
 GameObject:
   m_ObjectHideFlags: 0

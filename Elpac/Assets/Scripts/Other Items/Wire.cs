@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[Flags]
-public enum WireDirection { None = 0, Right = 1, Left = 2, Up = 4, Down = 8 }
-
-public class Wire : MonoBehaviour
+public abstract class Wire : MonoBehaviour
 {
-    public Sprite horizontalWireOn;
-    public Sprite horizontalWireOff;
-    public Sprite verticalWireOn;
-    public Sprite verticalWireOff;
+    protected Sprite wireOn;
+    protected Sprite wireOff;
+
+    private SpriteRenderer spriteRenderer;
 
     [HideInInspector]
-    public ItemInfo info;
+    public ItemData info;
     [HideInInspector]
     public bool fixedPosition;
     [HideInInspector]
     public bool horizontal;
+
+    private void Start()
+    {
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        PowerOff();
+    }
 
     public void EnergiesChanged(List<Energy> energies)
     {
@@ -28,13 +31,13 @@ public class Wire : MonoBehaviour
             PowerOn();
     }
 
-    private void PowerOff()
+    protected void PowerOff()
     {
-
+        spriteRenderer.sprite = wireOff;
     }
 
     private void PowerOn()
     {
-
+        spriteRenderer.sprite = wireOn;
     }
 }

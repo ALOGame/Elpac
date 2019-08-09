@@ -6,21 +6,22 @@ using UnityEngine;
 
 public class Level
 {
-    public List<ItemInfo> appliances;
+    public List<ItemData> appliances;
 
     public bool isLoaded { get; private set; }
 
-    public Level(string path)
+    public Level()
     {
-        appliances = new List<ItemInfo>();
-
-        LoadFromFile(path);
+        appliances = new List<ItemData>();
     }
 
-    private void LoadFromFile(string path)
+    public void LoadFromFile(string path)
     {
+        appliances.Clear();
+        isLoaded = false;
+
         string[] items;
-        List<Tuple<int, int>> usedGridCoords = new List<Tuple<int, int>>();
+        List<Tuple<int, int>> usedGridCoords = new List<Tuple<int, int>>(); // ?? Neni nahodou lepsi Dictionary? 
 
         try
         {
@@ -35,7 +36,7 @@ public class Level
 
         foreach (string item in items)
         {
-            int type = 0;
+            ItemType type = 0;
             int gridX = -1, gridY = -1;
             bool facingRight = false;
             bool loaded = false;
@@ -51,10 +52,10 @@ public class Level
                 loaded = true;
                 try
                 {
-                    int.TryParse(parameters[0], out type);
-                    int.TryParse(parameters[1], out gridX);
-                    int.TryParse(parameters[2], out gridY);
-                    bool.TryParse(parameters[3], out facingRight);
+                    type = (ItemType)int.Parse(parameters[0]);
+                    gridX = int.Parse(parameters[1]);
+                    gridY = int.Parse(parameters[2]);
+                    facingRight = bool.Parse(parameters[3]);
                     
                     if (parameters.Length > 4)
                     {
@@ -66,7 +67,6 @@ public class Level
                         }
                     }
                 }
-
                 catch
                 {
                     loaded = false;
@@ -78,7 +78,7 @@ public class Level
                 itemData = parameters;
             }
 
-            appliances.Add(new ItemInfo(loaded, (ItemType)type, new Vector2Int(gridX, gridY), facingRight, itemData));
+            appliances.Add(new ItemData(loaded, type, new Vector2Int(gridX, gridY), facingRight, itemData));
         }
 
         isLoaded = true;

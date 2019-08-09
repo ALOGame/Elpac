@@ -41,14 +41,14 @@ public class SlotGrid : MonoBehaviour
         }
     }
 
-    public void AddItems(List<ItemInfo> appliances)
+    public void AddItems(List<ItemData> appliances)
     {
         Vector3 position;
         GameObject go;
         Appliance appliance;
         Wire wire;
 
-        foreach (ItemInfo info in appliances)
+        foreach (ItemData info in appliances)
         {
             if (info.loaded)
             {
@@ -62,7 +62,7 @@ public class SlotGrid : MonoBehaviour
                 if (appliance != null) // An appliance
                 {
                     appliance.fixedPosition = true;
-                    appliance.info = info;
+                    appliance.data = info;
 
                     slots[info.gridPos.x, info.gridPos.y].SetAppliance(appliance);
                 }
@@ -73,21 +73,21 @@ public class SlotGrid : MonoBehaviour
 
                     if (wire.horizontal)
                     {
-                        slots[info.gridPos.x, info.gridPos.y].AddWireDirection(WireDirection.Right);
-                        slots[info.gridPos.x + 1, info.gridPos.y].AddWireDirection(WireDirection.Left);
+                        slots[info.gridPos.x, info.gridPos.y].AddWireDirection(Direction.Right);
+                        slots[info.gridPos.x + 1, info.gridPos.y].AddWireDirection(Direction.Left);
                     }
                     else
                     {
-                        slots[info.gridPos.x, info.gridPos.y].AddWireDirection(WireDirection.Down);
-                        slots[info.gridPos.x, info.gridPos.y + 1].AddWireDirection(WireDirection.Up);
+                        slots[info.gridPos.x, info.gridPos.y].AddWireDirection(Direction.Down);
+                        slots[info.gridPos.x, info.gridPos.y + 1].AddWireDirection(Direction.Up);
                     }
+                    slots[info.gridPos.x, info.gridPos.y].AddWire(wire);
                 }
                 else
                 {
                     Debug.LogError("Instantiated GameObject does not have script");
                 }
             }
-
             else
             {
                 string paramdump = "";
@@ -111,20 +111,30 @@ public class SlotGrid : MonoBehaviour
                 return ItemManager.VerticalWire();
             case ItemType.HorizontalWire:
                 return ItemManager.HorizontalWire();
+            case ItemType.Fan:
+                return ItemManager.Fan();
             default:
                 Debug.Log("GameGrid: Appliance is not implemented yet (" + type + ")");
                 return null;
         }
     }
 
-    public static void AddEnergyTrailToSlot(int xGrid, int yGrid, EnergyTrail trail, Energy caller) => instance.slots[xGrid, yGrid].AddEnergyTrail(trail, caller);
-    public static void RemoveEnergyTrailFromSlot(int xGrid, int yGrid, EnergyTrail trail) => instance.slots[xGrid, yGrid].RemoveEnergyTrail(trail);
+    public static void AddEnergyTrail(int xGrid, int yGrid, EnergyTrail trail) => instance.slots[xGrid, yGrid].AddEnergyTrail(trail);
+    public static void RemoveEnergyTrail(int xGrid, int yGrid, EnergyTrail trail) => instance.slots[xGrid, yGrid].RemoveEnergyTrail(trail);
+    public static List<EnergyTrail> GetEnergyTrails(int xGrid, int yGrid) => instance.slots[xGrid, yGrid].energyTrails;
 
-    public static WireDirection GetWireDirection(int xGrid, int yGrid)
+    public static Direction GetWireDirection(int xGrid, int yGrid)
     {
         if (xGrid < 0 || xGrid >= instance.slots.GetLength(0) || yGrid < 0 || yGrid >= instance.slots.GetLength(1))
-            return WireDirection.None;
+            return Direction.None;
 
         return instance.slots[xGrid, yGrid].wireDirection;
+    }
+    public static bool IsSlotOccupied(int xGrid, int yGrid)
+    {
+        if (xGrid < 0 || xGrid >= instance.slots.GetLength(0) || yGrid < 0 || yGrid >= instance.slots.GetLength(1))
+            return true;
+
+        return instance.slots[xGrid, yGrid].isOccupied;
     }
 }

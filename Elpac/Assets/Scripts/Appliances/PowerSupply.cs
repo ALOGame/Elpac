@@ -11,10 +11,10 @@ public class PowerSupply : Appliance
     private bool generatingPower;
     private Energy producedElectricity;
 
-    private void Start()
+    protected override void Start()
     {
         canInteractOnPlay = true;
-        producedElectricity = new Electricity(new Vector2Int(info.gridPos.x, info.gridPos.y));
+        producedElectricity = new Electricity(new Vector2Int(data.gridPos.x, data.gridPos.y));
         producedEnergies.Add(producedElectricity);
 
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();

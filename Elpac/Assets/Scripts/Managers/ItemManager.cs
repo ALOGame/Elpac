@@ -9,11 +9,13 @@ public class ItemManager : MonoBehaviour
     public GameObject target;
     public GameObject verticalWire;
     public GameObject horizontalWire;
+    public GameObject fan;
 
     public static GameObject PowerSupply() => instance.powerSupply;
     public static GameObject Target() => instance.target;
     public static GameObject VerticalWire() => instance.verticalWire;
     public static GameObject HorizontalWire() => instance.horizontalWire;
+    public static GameObject Fan() => instance.fan;
 
 
     private static ItemManager instance;

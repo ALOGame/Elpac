@@ -8,9 +8,9 @@ public class Slot : MonoBehaviour
     private Appliance appliance;
     private Wire[] wires;
 
-    public WireDirection wireDirection { get; private set; }
+    public Direction wireDirection { get; private set; }
 
-    private List<EnergyTrail> energyTrails;
+    public  List<EnergyTrail> energyTrails { get; private set; }
 
     public bool isOccupied { get { return appliance != null; } }
 
@@ -33,15 +33,15 @@ public class Slot : MonoBehaviour
             wires[1] = wire;
     }
 
-    public void AddWireDirection(WireDirection direction)
+    public void AddWireDirection(Direction direction)
     {
         wireDirection |= direction;
     }
 
-    public void AddEnergyTrail(EnergyTrail trail, Energy caller)
+    public void AddEnergyTrail(EnergyTrail trail)
     {
         energyTrails.Add(trail);
-        UpdateItems(caller);
+        UpdateItems(trail.energy);
     }
 
     public void RemoveEnergyTrail(EnergyTrail trail)

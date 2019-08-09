@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Electricity : Energy
 {
-    private bool spreaded;
-
     public Electricity (Vector2Int gridPos) : base(EnType.Electric, gridPos) { }
 
     public override void Spread()
@@ -18,7 +16,7 @@ public class Electricity : Energy
         List<Vector2Int> closedSet = new List<Vector2Int>();
         openSet.Enqueue(gridPos);
 
-        WireDirection wireDirection;
+        Direction wireDirection;
         Vector2Int currPos;
 
         while (openSet.Count > 0)
@@ -38,33 +36,33 @@ public class Electricity : Energy
 
         foreach (Vector2Int position in closedSet)
         {
-            EnergyTrail newTrail = new EnergyTrail(position, energyType, EnDirection.None, this);
+            EnergyTrail newTrail = new EnergyTrail(position, energyType, Direction.None, this);
             trails.Add(newTrail);
-            SlotGrid.AddEnergyTrailToSlot(position.x, position.y, newTrail, this);
-            Debug.Log("added energy");
+            SlotGrid.AddEnergyTrail(position.x, position.y, newTrail);
+            Debug.Log("added trail: " + position);
         }
     }
 
-    private List<Vector2Int> GetConnectedSlotPositions(Vector2Int position, WireDirection wireDirection)
+    private List<Vector2Int> GetConnectedSlotPositions(Vector2Int position, Direction wireDirection)
     {
         List<Vector2Int> connectedPositions = new List<Vector2Int>();
 
-        if (wireDirection.HasFlag(WireDirection.Up))
+        if (wireDirection.HasFlag(Direction.Up))
         {
             Vector2Int newPos = new Vector2Int(position.x, position.y - 1);
             connectedPositions.Add(newPos);
         }
-        if (wireDirection.HasFlag(WireDirection.Down))
+        if (wireDirection.HasFlag(Direction.Down))
         {
             Vector2Int newPos = new Vector2Int(position.x, position.y + 1);
             connectedPositions.Add(newPos);
         }
-        if (wireDirection.HasFlag(WireDirection.Right))
+        if (wireDirection.HasFlag(Direction.Right))
         {
             Vector2Int newPos = new Vector2Int(position.x + 1, position.y);
             connectedPositions.Add(newPos);
         }
-        if (wireDirection.HasFlag(WireDirection.Left))
+        if (wireDirection.HasFlag(Direction.Left))
         {
             Vector2Int newPos = new Vector2Int(position.x - 1, position.y);
             connectedPositions.Add(newPos);
@@ -73,20 +71,8 @@ public class Electricity : Energy
         return connectedPositions;
     }
 
-    public override void StopSpreading()
-    {
-        foreach (EnergyTrail trail in trails)
-        {
-            SlotGrid.RemoveEnergyTrailFromSlot(trail.gridPos.x, trail.gridPos.y, trail);
-        }
-
-        ClearTrailList();
-
-        spreaded = false;
-    }
-
     public override void UpdateTrail()
     {
-        Debug.Log("trail updated");
+        
     }
 }

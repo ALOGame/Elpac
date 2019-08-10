@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SlotGrid : MonoBehaviour
 {
@@ -55,7 +54,7 @@ public class SlotGrid : MonoBehaviour
             {
                 position = new Vector3(leftCornerOffset.x + info.gridPos.x * spacing.x, leftCornerOffset.y - info.gridPos.y * spacing.y, 10);
                 position += cameraTopLeftPos + new Vector3(2, -2, 0);
-                go = Instantiate(GetCorespondingItem(info.type), position, Quaternion.identity, transform);
+                go = Instantiate(ItemManager.GetCorespondingItem(info.type), position, Quaternion.identity, transform);
 
                 appliance = go.GetComponent<Appliance>();
                 wire = go.GetComponent<Wire>();
@@ -95,32 +94,11 @@ public class SlotGrid : MonoBehaviour
                 foreach (object param in info.itemData)
                     builder.Append(" ").Append(param.ToString());
 
-                Debug.LogError("Isufficient or errorneous Item parameters -" + builder.ToString());
+                Debug.LogError("Insufficient or erroneous Item parameters - " + builder.ToString());
             }
         }
     }
-
-    private GameObject GetCorespondingItem(ItemType type)
-    {
-        switch (type)
-        {
-            case ItemType.PowerSupply:
-                return ItemManager.PowerSupply();
-            case ItemType.PowerConsumer:
-                return ItemManager.Target();
-            case ItemType.VerticalWire:
-                return ItemManager.VerticalWire();
-            case ItemType.HorizontalWire:
-                return ItemManager.HorizontalWire();
-            case ItemType.Fan:
-                return ItemManager.Fan();
-            case ItemType.Battery:
-                return ItemManager.Battery();
-            default:
-                Debug.Log("GameGrid: Appliance is not implemented yet (" + type + ")");
-                return null;
-        }
-    }
+    
     public static List<EnergyTrail> GetEnergyTrails(int xGrid, int yGrid) => instance.slots[xGrid, yGrid].energyTrails;
 
     public static void AddEnergyTrails(List<EnergyTrail> trails)
@@ -152,16 +130,20 @@ public class SlotGrid : MonoBehaviour
 
     public static Direction GetWireDirection(int xGrid, int yGrid)
     {
-        if (xGrid < 0 || xGrid >= instance.slots.GetLength(0) || yGrid < 0 || yGrid >= instance.slots.GetLength(1))
+        if (!PositionInsideGrid(xGrid, yGrid))
             return Direction.None;
 
         return instance.slots[xGrid, yGrid].wireDirection;
     }
     public static bool IsSlotOccupied(int xGrid, int yGrid)
     {
-        if (xGrid < 0 || xGrid >= instance.slots.GetLength(0) || yGrid < 0 || yGrid >= instance.slots.GetLength(1))
+        if (!PositionInsideGrid(xGrid, yGrid))
             return true;
 
         return instance.slots[xGrid, yGrid].isOccupied;
+    }
+    public static bool PositionInsideGrid(int xGrid, int yGrid)
+    {
+        return !(xGrid < 0 || xGrid >= instance.slots.GetLength(0) || yGrid < 0 || yGrid >= instance.slots.GetLength(1));
     }
 }

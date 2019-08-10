@@ -11,13 +11,23 @@ public class ItemManager : MonoBehaviour
     public GameObject horizontalWire;
     public GameObject fan;
     public GameObject battery;
+    public GameObject heater;
+    public GameObject heatsink;
+    public GameObject laserGun;
+    public GameObject laserFeeder;
+    public GameObject laserMirror;
 
-    public static GameObject PowerSupply() => instance.powerSupply;
-    public static GameObject Target() => instance.target;
-    public static GameObject VerticalWire() => instance.verticalWire;
-    public static GameObject HorizontalWire() => instance.horizontalWire;
-    public static GameObject Fan() => instance.fan;
-    public static GameObject Battery() => instance.battery;
+    private static GameObject PowerSupply() => instance.powerSupply;
+    private static GameObject Target() => instance.target;
+    private static GameObject VerticalWire() => instance.verticalWire;
+    private static GameObject HorizontalWire() => instance.horizontalWire;
+    private static GameObject Fan() => instance.fan;
+    private static GameObject Battery() => instance.battery;
+    private static GameObject Heater() => instance.heater;
+    private static GameObject HeatSink() => instance.heatsink;
+    private static GameObject LaserGun() => instance.laserGun;
+    private static GameObject LaserFeeder() => instance.laserFeeder;
+    private static GameObject LaserMirror() => instance.laserMirror;
 
 
     private static ItemManager instance;
@@ -25,5 +35,36 @@ public class ItemManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+    public static GameObject GetCorespondingItem(ItemType type)
+    {
+        switch (type)
+        {
+            case ItemType.PowerSupply:
+                return PowerSupply();
+            case ItemType.PowerConsumer:
+                return Target();
+            case ItemType.VerticalWire:
+                return VerticalWire();
+            case ItemType.HorizontalWire:
+                return HorizontalWire();
+            case ItemType.Fan:
+                return Fan();
+            case ItemType.Battery:
+                return Battery();
+            case ItemType.Heater:
+                return Heater();
+            case ItemType.Heatsink:
+                return HeatSink();
+            case ItemType.LaserGun:
+                return LaserGun();
+            case ItemType.LaserFeeder:
+                return LaserFeeder();
+            case ItemType.LaserMirror:
+                return LaserMirror();
+            default:
+                Debug.Log("GameGrid: Appliance is not implemented yet (" + type + ")");
+                return null;
+        }
     }
 }

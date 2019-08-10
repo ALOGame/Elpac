@@ -13,17 +13,11 @@ public class Steam : Energy
 
     public override void Spread()
     {
-        if (spreaded)
-            return;
+
     }
 
-    public override void UpdateTrail()
+    public override void UpdateTrail(List<EnergyTrail> trails)
     {
         
-    }
-
-    public void UpdateTrailPath()
-    {
-
     }
 }

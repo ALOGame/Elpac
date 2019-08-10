@@ -13,21 +13,20 @@ public class Battery : Appliance
 
     protected override void OnPowerOn()
     {
-        Debug.Log("battery powered");
         producedEnergies[0].StopSpreading();
-        base.OnPowerOn();
+        Debug.Log("battery: stopped spreading");
     }
 
     protected override void OnPowerOff()
     {
-        Debug.Log("battery unpowered");
-        if (powered)
-        {
-            producedEnergies[0].Spread();
-            Debug.Log("battery producing electricity");
-            //producedEnergies[0].StopSpreading();
-            //Debug.Log("forced to stop producing");
-        }
-        base.OnPowerOff();
+        Invoke("SpreadElectricity", chargingTime);
+    }
+
+    private void SpreadElectricity()
+    {
+        if (powered) // Battery got powered again -> stop producing energy
+            return;
+        producedEnergies[0].Spread();
+        Debug.Log("bettery: started spreging");
     }
 }

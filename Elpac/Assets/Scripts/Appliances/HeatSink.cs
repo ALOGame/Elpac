@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heater : Appliance
+public class HeatSink : Appliance
 {
     protected override void Start()
     {
-        consumerableEnergyType = EnType.Electric;
-        producedEnergies.Add(new Heat(data.gridPos, 2));
+        consumerableEnergyType = EnType.Heat;
+        producedEnergies.Add(new Electricity(data.gridPos));
     }
 
     protected override void OnPowerOn()
     {
         producedEnergies[0].Spread();
+        Debug.Log("Heatsink: spreaded electricity");
     }
 
     protected override void OnPowerOff()
     {
         producedEnergies[0].StopSpreading();
+        Debug.Log("Heatsink: stoped spreading electricity");
     }
 }

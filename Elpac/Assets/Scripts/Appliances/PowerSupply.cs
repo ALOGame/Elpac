@@ -24,11 +24,6 @@ public class PowerSupply : Appliance
     {
         if (!GameManager.gameRunning)
             return;
-
-        if (generatingPower)
-        {
-            Debug.Log("generating power " + producedEnergies.Count);
-        }
     }
 
     public override void InteractOnPlay()
@@ -52,4 +47,8 @@ public class PowerSupply : Appliance
         producedElectricity.Spread();
         spriteRenderer.sprite = spritePowerOn;
     }
+
+    protected override void OnPowerOn() { } // Unused in this class
+
+    protected override void OnPowerOff() { } // Unused in this class
 }

@@ -8,11 +8,11 @@ public enum Direction { None = 0, Right = 1, Left = 2, Up = 4, Down = 8 }
 
 public abstract class Energy
 {
-    public EnType energyType;
+    public EnType energyType { get; private set; }
+    public bool canInfluenceSameType { get; protected set; }
     protected Vector2Int gridPos;
     protected List<EnergyTrail> trails;
     protected List<EnType> affectingEnergies;
-    protected bool spreaded;
 
     public Energy(EnType type, Vector2Int gridPos)
     {
@@ -20,16 +20,15 @@ public abstract class Energy
         this.gridPos = gridPos;
         trails = new List<EnergyTrail>();
         affectingEnergies = new List<EnType>();
+        canInfluenceSameType = true;
     }
 
     public abstract void Spread();
-    public abstract void UpdateTrail();
+    public abstract void UpdateTrail(List<EnergyTrail> trails);
     public void StopSpreading()
     {
         SlotGrid.RemoveEnergyTrails(trails);
 
         trails.Clear();
-
-        spreaded = false;
     }
 }

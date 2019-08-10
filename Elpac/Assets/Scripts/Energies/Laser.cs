@@ -1,14 +1,15 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wind : Energy
+public class Laser : Energy
 {
     private Direction spreadDirection;
 
-    public Wind(Vector2Int gridPos, Direction spreadDirection) : base(EnType.Wind, gridPos)
+    public Laser(Vector2Int gridPos, Direction direction) : base(EnType.Laser, gridPos)
     {
-        this.spreadDirection = spreadDirection;
+        spreadDirection = direction;
+        canInfluenceSameType = false;
     }
 
     public override void Spread()
@@ -19,8 +20,7 @@ public class Wind : Energy
             moveX = 1;
         else if (spreadDirection == Direction.Left)
             moveX = -1;
-
-        if (spreadDirection == Direction.Down)
+        else if (spreadDirection == Direction.Down)
             moveY = 1;
         else if (spreadDirection == Direction.Up)
             moveY = -1;
@@ -32,15 +32,12 @@ public class Wind : Energy
             trailPos.x += moveX;
             trailPos.y += moveY;
 
-            EnergyTrail trail = new EnergyTrail(trailPos, EnType.Wind, spreadDirection, this);
+            EnergyTrail trail = new EnergyTrail(trailPos, EnType.Laser, spreadDirection, this);
             trails.Add(trail);
         } while (!SlotGrid.IsSlotOccupied(trailPos.x, trailPos.y));
 
         SlotGrid.AddEnergyTrails(trails);
     }
 
-    public override void UpdateTrail(List<EnergyTrail> trails)
-    {
-        
-    }
+    public override void UpdateTrail(List<EnergyTrail> trails) { }
 }

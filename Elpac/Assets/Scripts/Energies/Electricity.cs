@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Electricity : Energy
 {
-    public Electricity (Vector2Int gridPos) : base(EnType.Electric, gridPos) { }
+    public Electricity (Vector2Int gridPos) : base(EnType.Electric, gridPos)
+    {
+        canInfluenceSameType = false;
+    }
 
     public override void Spread()
     {
-        if (spreaded)
-            return;
-        spreaded = true;
-
         Queue<Vector2Int> openSet = new Queue<Vector2Int>();
         List<Vector2Int> closedSet = new List<Vector2Int>();
         openSet.Enqueue(gridPos);
@@ -71,7 +70,7 @@ public class Electricity : Energy
         return connectedPositions;
     }
 
-    public override void UpdateTrail()
+    public override void UpdateTrail(List<EnergyTrail> trails)
     {
         
     }

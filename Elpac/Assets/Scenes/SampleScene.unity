@@ -2453,20 +2453,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &445160428
-Transform:
+--- !u!224 &445160428
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445160426}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.631872, y: 8.411774, z: 53.3}
+  m_LocalPosition: {x: 0, y: 0, z: 53.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1237593924}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -9.631872, y: 8.411774}
+  m_SizeDelta: {x: 2, y: 2}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &456508286
 GameObject:
   m_ObjectHideFlags: 0
@@ -11919,6 +11924,15 @@ MonoBehaviour:
     type: 3}
   fan: {fileID: 3655985699936607722, guid: a43e8d5615bc3874399dd61153b50596, type: 3}
   battery: {fileID: 508113152227185643, guid: c9093f3b8f0865241b02fbaddf902e56, type: 3}
+  heater: {fileID: 4561928972353074031, guid: 31d3e35fb62b7fe4c8a65d849bdc500c, type: 3}
+  heatsink: {fileID: 8677130284395292347, guid: b2ef1bcf923b6c044a3027e0e9c0a675,
+    type: 3}
+  laserGun: {fileID: 8467688218951010248, guid: ec535476b79eb80449ef2c4fb93388d2,
+    type: 3}
+  laserFeeder: {fileID: 7288257187135938449, guid: 0df5bc0baec135d44ade1925bb3d7fce,
+    type: 3}
+  laserMirror: {fileID: 6081528808676552224, guid: 609d3706fd20fb242af9a7b99a9b5544,
+    type: 3}
 --- !u!4 &2068777340
 Transform:
   m_ObjectHideFlags: 0

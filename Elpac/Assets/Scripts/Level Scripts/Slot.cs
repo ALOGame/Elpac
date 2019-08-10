@@ -17,7 +17,7 @@ public class Slot : MonoBehaviour
     private void Awake()
     {
         energyTrails = new List<EnergyTrail>();
-        wires = new Wire[2];
+        wires = new Wire[2]; // Max of two wires in one slot
     }
 
     public void SetAppliance(Appliance appliance)
@@ -58,7 +58,7 @@ public class Slot : MonoBehaviour
         {
             if (!updatedEnergies.Contains(trail.energy))
             {
-                trail.energy.UpdateTrail();
+                trail.energy.UpdateTrail(energyTrails);
                 updatedEnergies.Add(trail.energy);
             }
         }

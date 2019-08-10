@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemType { UnKnown = 0, PowerSupply = 1, PowerConsumer = 2, VerticalWire = 3, HorizontalWire = 4, Fan = 5, Battery = 6}
+public enum ItemType { UnKnown = 0, PowerSupply = 1, PowerConsumer = 2, VerticalWire = 3, HorizontalWire = 4, Fan = 5, Battery = 6, Heater = 7, Heatsink = 8, LaserGun = 9, LaserFeeder = 10, LaserMirror = 11 }
 
 public abstract class Appliance : MonoBehaviour
 {
@@ -14,10 +14,11 @@ public abstract class Appliance : MonoBehaviour
 
     protected bool powered;
 
+    protected Direction consumedEnergyDir;
     protected EnType consumerableEnergyType;
     protected List<Energy> producedEnergies;
     protected bool interactableOnPlay;
-    protected uint chargingTime;
+    protected float chargingTime = 0.6f;
 
     private void Awake()
     {
@@ -32,34 +33,53 @@ public abstract class Appliance : MonoBehaviour
         IEnumerable<EnergyTrail> consumedEnergies = trails.Where(trail => trail.type == consumerableEnergyType);
 
         Direction finalDirection = Direction.None;
-        foreach (EnergyTrail trail in consumedEnergies)
+        bool canInfluenceSameType = trails.Count > 0 ? trails[0].energy.canInfluenceSameType : true;
+
+        if (canInfluenceSameType)
         {
-            finalDirection |= trail.direction;
+            foreach (EnergyTrail trail in consumedEnergies)
+            {
+                finalDirection |= trail.direction;
+            }
+
+            if (finalDirection.HasFlag(Direction.Right) && finalDirection.HasFlag(Direction.Left))
+            {
+                finalDirection &= ~(Direction.Right | Direction.Left);
+            }
+            if (finalDirection.HasFlag(Direction.Up) && finalDirection.HasFlag(Direction.Down))
+            {
+                finalDirection &= ~(Direction.Up | Direction.Down);
+            }
         }
 
-        if (finalDirection.HasFlag(Direction.Right) && finalDirection.HasFlag(Direction.Left))
+        if (!powered && consumedEnergies.Count() > 0 && (finalDirection != Direction.None || !canInfluenceSameType))
         {
-            finalDirection &= ~(Direction.Right | Direction.Left);
+            Invoke("PowerOn", chargingTime);
+            consumedEnergyDir = finalDirection;
         }
-        if (finalDirection.HasFlag(Direction.Up) && finalDirection.HasFlag(Direction.Down))
-        {
-            finalDirection &= ~(Direction.Up | Direction.Down);
-        }
-
-        if (finalDirection != Direction.None || (consumerableEnergyType == EnType.Electric && consumedEnergies.Count(trail => trail.type == EnType.Electric) > 0)) // Electric energy has EnDirection.None
-            OnPowerOn();
-        else if (powered)
-            OnPowerOff();
+        else if (powered && consumedEnergies.Count() == 0)
+            PowerOff();
+        else
+            CancelInvokes();
     }
 
-    protected virtual void OnPowerOn()
+    private void PowerOn()
     {
+        OnPowerOn();
         powered = true;
     }
-    protected virtual void OnPowerOff()
+    private void PowerOff()
     {
+        OnPowerOff();
         powered = false;
+        consumedEnergyDir = Direction.None;
     }
+    private void CancelInvokes()
+    {
+        CancelInvoke();
+    }
+    protected abstract void OnPowerOn();
+    protected abstract void OnPowerOff();
     public virtual void InteractOnPlay() { }
     protected abstract void Start(); // Forcing inhereted members to implement Start method so they won't forget to inicialize consumable energy type and producing energies
 }

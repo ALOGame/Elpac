@@ -41,16 +41,14 @@ public class Slot : MonoBehaviour
     public void AddEnergyTrail(EnergyTrail trail)
     {
         energyTrails.Add(trail);
-        UpdateItems(trail.energy);
     }
 
     public void RemoveEnergyTrail(EnergyTrail trail)
     {
         energyTrails.Remove(trail);
-        UpdateItems(null);
     }
 
-    private void UpdateItems(Energy caller)
+    public void UpdateItems(Energy caller)
     {
         List<Energy> updatedEnergies = new List<Energy>();
         if (caller != null)
@@ -69,7 +67,7 @@ public class Slot : MonoBehaviour
 
         foreach (Wire wire in wires)
         {
-            wire?.EnergiesChanged(updatedEnergies);
+            wire?.EnergiesChanged(energyTrails);
         }
     }
 }

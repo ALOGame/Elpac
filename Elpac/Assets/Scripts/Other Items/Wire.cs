@@ -23,15 +23,15 @@ public abstract class Wire : MonoBehaviour
         PowerOff();
     }
 
-    public void EnergiesChanged(List<Energy> energies)
+    public void EnergiesChanged(List<EnergyTrail> energies)
     {
-        if (energies.Count(energy => energy.energyType == EnType.Electric) == 0)
+        if (energies.Count(trail => trail.type == EnType.Electric) == 0)
             PowerOff();
         else
             PowerOn();
     }
 
-    protected void PowerOff()
+    private void PowerOff()
     {
         spriteRenderer.sprite = wireOff;
     }

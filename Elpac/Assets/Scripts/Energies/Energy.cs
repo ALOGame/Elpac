@@ -26,10 +26,7 @@ public abstract class Energy
     public abstract void UpdateTrail();
     public void StopSpreading()
     {
-        foreach (EnergyTrail trail in trails)
-        {
-            SlotGrid.RemoveEnergyTrail(trail.gridPos.x, trail.gridPos.y, trail);
-        }
+        SlotGrid.RemoveEnergyTrails(trails);
 
         trails.Clear();
 

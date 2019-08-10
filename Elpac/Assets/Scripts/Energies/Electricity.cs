@@ -38,9 +38,9 @@ public class Electricity : Energy
         {
             EnergyTrail newTrail = new EnergyTrail(position, energyType, Direction.None, this);
             trails.Add(newTrail);
-            SlotGrid.AddEnergyTrail(position.x, position.y, newTrail);
-            Debug.Log("added trail: " + position);
         }
+
+        SlotGrid.AddEnergyTrails(trails);
     }
 
     private List<Vector2Int> GetConnectedSlotPositions(Vector2Int position, Direction wireDirection)

@@ -11,12 +11,12 @@ public class Fan : Appliance
         consumerableEnergyType = EnType.Electric;
     }
 
-    protected override void PowerOn()
+    protected override void OnPowerOn()
     {
         producedEnergies[0].Spread();
     }
 
-    protected override void PowerOff()
+    protected override void OnPowerOff()
     {
         producedEnergies[0].StopSpreading();
     }

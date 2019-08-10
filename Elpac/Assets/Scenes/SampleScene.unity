@@ -8972,6 +8972,7 @@ MonoBehaviour:
   horizontalWire: {fileID: 6800190078007776005, guid: 46e59fcd5e2096a4d981e217fdeaa1cf,
     type: 3}
   fan: {fileID: 3655985699936607722, guid: a43e8d5615bc3874399dd61153b50596, type: 3}
+  battery: {fileID: 508113152227185643, guid: c9093f3b8f0865241b02fbaddf902e56, type: 3}
 --- !u!4 &2068777340
 Transform:
   m_ObjectHideFlags: 0

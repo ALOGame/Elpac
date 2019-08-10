@@ -38,8 +38,9 @@ public class Wind : Energy
 
             EnergyTrail trail = new EnergyTrail(trailPos, EnType.Wind, spreadDirection, this);
             trails.Add(trail);
-            SlotGrid.AddEnergyTrail(trailPos.x, trailPos.y, trail);
         } while (!SlotGrid.IsSlotOccupied(trailPos.x, trailPos.y));
+
+        SlotGrid.AddEnergyTrails(trails);
     }
 
     public override void UpdateTrail()

@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemType { UnKnown, PowerSupply, PowerConsumer, VerticalWire, HorizontalWire, Fan}
+public enum ItemType { UnKnown = 0, PowerSupply = 1, PowerConsumer = 2, VerticalWire = 3, HorizontalWire = 4, Fan = 5, Battery = 6}
 
 public abstract class Appliance : MonoBehaviour
 {
     public ItemData data;
-    
+
+    public bool fixedPosition;
+    public bool canInteractOnPlay;
+
     protected bool powered;
 
     protected EnType consumerableEnergyType;
     protected List<Energy> producedEnergies;
     protected bool interactableOnPlay;
-
-    public bool fixedPosition;
-    public bool canInteractOnPlay;
+    protected uint chargingTime;
 
     private void Awake()
     {
@@ -46,17 +47,19 @@ public abstract class Appliance : MonoBehaviour
         }
 
         if (finalDirection != Direction.None || (consumerableEnergyType == EnType.Electric && consumedEnergies.Count(trail => trail.type == EnType.Electric) > 0)) // Electric energy has EnDirection.None
-        {
-            PowerOn();
-        }
-        else
-        {
-            PowerOff();
-        }
+            powered = true;
+        else if (powered)
+            powered = false;
     }
 
-    protected virtual void PowerOn() { }
-    protected virtual void PowerOff() { }
+    protected virtual void OnPowerOn()
+    {
+        powered = true;
+    }
+    protected virtual void OnPowerOff()
+    {
+        powered = false;
+    }
     public virtual void InteractOnPlay() { }
     protected abstract void Start(); // Forcing inhereted members to implement Start method so they won't forget to inicialize consumable energy type and producing energies
 }

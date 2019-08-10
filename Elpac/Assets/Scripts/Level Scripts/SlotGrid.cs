@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -90,11 +91,11 @@ public class SlotGrid : MonoBehaviour
             }
             else
             {
-                string paramdump = "";
+                StringBuilder builder = new StringBuilder();
                 foreach (object param in info.itemData)
-                    paramdump += (" " + param.ToString());
+                    builder.Append(" ").Append(param.ToString());
 
-                Debug.LogError("Isufficient or errorneous Item parameters -" + paramdump);
+                Debug.LogError("Isufficient or errorneous Item parameters -" + builder.ToString());
             }
         }
     }
@@ -113,15 +114,41 @@ public class SlotGrid : MonoBehaviour
                 return ItemManager.HorizontalWire();
             case ItemType.Fan:
                 return ItemManager.Fan();
+            case ItemType.Battery:
+                return ItemManager.Battery();
             default:
                 Debug.Log("GameGrid: Appliance is not implemented yet (" + type + ")");
                 return null;
         }
     }
-
-    public static void AddEnergyTrail(int xGrid, int yGrid, EnergyTrail trail) => instance.slots[xGrid, yGrid].AddEnergyTrail(trail);
-    public static void RemoveEnergyTrail(int xGrid, int yGrid, EnergyTrail trail) => instance.slots[xGrid, yGrid].RemoveEnergyTrail(trail);
     public static List<EnergyTrail> GetEnergyTrails(int xGrid, int yGrid) => instance.slots[xGrid, yGrid].energyTrails;
+
+    public static void AddEnergyTrails(List<EnergyTrail> trails)
+    {
+        foreach (EnergyTrail trail in trails)
+        {
+            instance.slots[trail.gridPos.x, trail.gridPos.y].AddEnergyTrail(trail);
+        }
+
+        UpdateSlots(trails);
+    }
+    public static void RemoveEnergyTrails(List<EnergyTrail> trails)
+    {
+        foreach (EnergyTrail trail in trails)
+        {
+            instance.slots[trail.gridPos.x, trail.gridPos.y].RemoveEnergyTrail(trail);
+        }
+
+        UpdateSlots(trails);
+    }
+
+    private static void UpdateSlots(List<EnergyTrail> trails)
+    {
+        foreach (EnergyTrail trail in trails)
+        {
+            instance.slots[trail.gridPos.x, trail.gridPos.y].UpdateItems(trail.energy);
+        }
+    }
 
     public static Direction GetWireDirection(int xGrid, int yGrid)
     {

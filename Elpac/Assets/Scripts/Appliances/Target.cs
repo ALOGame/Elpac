@@ -8,12 +8,12 @@ public class Target : Appliance
     {
         consumerableEnergyType = EnType.Electric;
     }
-    protected override void PowerOn()
+    protected override void OnPowerOn()
     {
         Debug.Log("PowerConsumer: powered");
     }
 
-    protected override void PowerOff()
+    protected override void OnPowerOff()
     {
         Debug.Log("PowerConsumer: unpowered");
     }

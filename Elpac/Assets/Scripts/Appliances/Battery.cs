@@ -15,6 +15,7 @@ public class Battery : Appliance
     {
         Debug.Log("battery powered");
         producedEnergies[0].StopSpreading();
+        base.OnPowerOn();
     }
 
     protected override void OnPowerOff()
@@ -27,5 +28,6 @@ public class Battery : Appliance
             //producedEnergies[0].StopSpreading();
             //Debug.Log("forced to stop producing");
         }
+        base.OnPowerOff();
     }
 }

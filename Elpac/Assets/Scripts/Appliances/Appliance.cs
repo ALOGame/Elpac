@@ -47,9 +47,9 @@ public abstract class Appliance : MonoBehaviour
         }
 
         if (finalDirection != Direction.None || (consumerableEnergyType == EnType.Electric && consumedEnergies.Count(trail => trail.type == EnType.Electric) > 0)) // Electric energy has EnDirection.None
-            powered = true;
+            OnPowerOn();
         else if (powered)
-            powered = false;
+            OnPowerOff();
     }
 
     protected virtual void OnPowerOn()

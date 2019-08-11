@@ -19,5 +19,6 @@ public class LaserGun : Appliance
     protected override void OnPowerOn()
     {
         producedEnergies[0].Spread();
+        Debug.Log("laser gun: started spreading ");
     }
 }

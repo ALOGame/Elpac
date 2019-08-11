@@ -13,12 +13,10 @@ public class HeatSink : Appliance
     protected override void OnPowerOn()
     {
         producedEnergies[0].Spread();
-        Debug.Log("Heatsink: spreaded electricity");
     }
 
     protected override void OnPowerOff()
     {
         producedEnergies[0].StopSpreading();
-        Debug.Log("Heatsink: stoped spreading electricity");
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Steam : Energy
 {
-
-
     public Steam(Vector2Int gridPos) : base(EnType.Steam, gridPos)
     {
         affectingEnergies.Add(EnType.Wind);

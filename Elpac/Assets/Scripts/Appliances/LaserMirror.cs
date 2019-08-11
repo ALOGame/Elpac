@@ -21,8 +21,10 @@ public class LaserMirror : Appliance
             foreach (object param in data.itemData)
                 builder.Append(" ").Append(param.ToString());
 
-            Debug.Log("Erroneous LaserMirror data - " + builder.ToString());
+            Debug.LogError("Insufficient or erroneous LaserMirror data - " + builder.ToString());
         }
+        if (!facingUp)
+            spriteRenderer.flipY = true;
 
         consumerableEnergyType = EnType.Laser;
 
@@ -35,20 +37,23 @@ public class LaserMirror : Appliance
 
     protected override void OnPowerOn()
     {
-        if (consumedEnergyDir == Direction.Up || consumedEnergyDir == Direction.Down)
+        Debug.Log("mirror: onpoweron: " + consumedEnergyDir);
+        if ((consumedEnergyDir == Direction.Up && facingUp) || (consumedEnergyDir == Direction.Down && !facingUp))
             ReflectLeftRight();
-        else
+        else if ((consumedEnergyDir == Direction.Left && !data.facingRight) || (consumedEnergyDir == Direction.Right && data.facingRight))
             ReflectUpDown();
     }
 
     private void ReflectUpDown()
     {
         laserUpDown.Spread();
+        Debug.Log("laser mirror: started reflecting updown");
     }
 
     private void ReflectLeftRight()
     {
         laserLeftRight.Spread();
+        Debug.Log("laser mirror: started reflecting leftright");
     }
 
     protected override void OnPowerOff()

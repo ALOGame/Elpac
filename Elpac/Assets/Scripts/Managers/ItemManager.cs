@@ -10,6 +10,7 @@ public class ItemManager : MonoBehaviour
     public GameObject verticalWire;
     public GameObject horizontalWire;
     public GameObject fan;
+    public GameObject windTurbine;
     public GameObject battery;
     public GameObject heater;
     public GameObject heatsink;
@@ -22,6 +23,7 @@ public class ItemManager : MonoBehaviour
     private static GameObject VerticalWire() => instance.verticalWire;
     private static GameObject HorizontalWire() => instance.horizontalWire;
     private static GameObject Fan() => instance.fan;
+    private static GameObject WindTurbine() => instance.windTurbine;
     private static GameObject Battery() => instance.battery;
     private static GameObject Heater() => instance.heater;
     private static GameObject HeatSink() => instance.heatsink;
@@ -50,6 +52,8 @@ public class ItemManager : MonoBehaviour
                 return HorizontalWire();
             case ItemType.Fan:
                 return Fan();
+            case ItemType.WindTurbine:
+                return WindTurbine();
             case ItemType.Battery:
                 return Battery();
             case ItemType.Heater:

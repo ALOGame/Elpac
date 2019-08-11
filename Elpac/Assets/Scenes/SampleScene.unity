@@ -11923,6 +11923,8 @@ MonoBehaviour:
   horizontalWire: {fileID: 6800190078007776005, guid: 46e59fcd5e2096a4d981e217fdeaa1cf,
     type: 3}
   fan: {fileID: 3655985699936607722, guid: a43e8d5615bc3874399dd61153b50596, type: 3}
+  windTurbine: {fileID: 4641860126708392032, guid: 4a59575b156b27e4e983659a096932c9,
+    type: 3}
   battery: {fileID: 508113152227185643, guid: c9093f3b8f0865241b02fbaddf902e56, type: 3}
   heater: {fileID: 4561928972353074031, guid: 31d3e35fb62b7fe4c8a65d849bdc500c, type: 3}
   heatsink: {fileID: 8677130284395292347, guid: b2ef1bcf923b6c044a3027e0e9c0a675,

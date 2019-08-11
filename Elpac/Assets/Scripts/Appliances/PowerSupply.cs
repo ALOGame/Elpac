@@ -6,8 +6,6 @@ public class PowerSupply : Appliance
 {
     public Sprite spritePowerOn, spritePowerOff;
 
-    private SpriteRenderer spriteRenderer;
-
     private bool generatingPower;
     private Energy producedElectricity;
 
@@ -16,8 +14,6 @@ public class PowerSupply : Appliance
         canInteractOnPlay = true;
         producedElectricity = new Electricity(new Vector2Int(data.gridPos.x, data.gridPos.y));
         producedEnergies.Add(producedElectricity);
-
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()

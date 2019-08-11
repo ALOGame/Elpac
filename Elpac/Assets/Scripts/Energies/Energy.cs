@@ -6,7 +6,7 @@ using UnityEngine;
 [Flags]
 public enum Direction { None = 0, Right = 1, Left = 2, Up = 4, Down = 8 }
 
-public abstract class Energy
+public abstract class Energy : MonoBehaviour
 {
     public EnType energyType { get; private set; }
     public bool canInfluenceSameType { get; protected set; }
@@ -25,7 +25,7 @@ public abstract class Energy
 
     public abstract void Spread();
     public abstract void UpdateTrail(List<EnergyTrail> trails);
-    public void StopSpreading()
+    public virtual void StopSpreading()
     {
         SlotGrid.RemoveEnergyTrails(trails);
 

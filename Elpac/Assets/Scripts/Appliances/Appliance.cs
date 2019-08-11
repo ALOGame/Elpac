@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemType { UnKnown = 0, PowerSupply = 1, PowerConsumer = 2, VerticalWire = 3, HorizontalWire = 4, Fan = 5, Battery = 6, Heater = 7, Heatsink = 8, LaserGun = 9, LaserFeeder = 10, LaserMirror = 11 }
+public enum ItemType { UnKnown = 0, PowerSupply = 1, PowerConsumer = 2, VerticalWire = 3, HorizontalWire = 4, Fan = 5, WindTurbine = 6, Battery = 7, Heater = 8, Heatsink = 9, LaserGun = 10, LaserFeeder = 11, LaserMirror = 12 }
 
 public abstract class Appliance : MonoBehaviour
 {
-    public ItemData data;
+
+    private ItemData _data;
+    public ItemData data
+    {
+        get { return _data; }
+        set
+        {
+            _data = value;
+            if (!data.facingRight)
+                spriteRenderer.flipX = true;
+        }
+    }
 
     public bool fixedPosition;
     public bool canInteractOnPlay;
@@ -20,9 +31,12 @@ public abstract class Appliance : MonoBehaviour
     protected bool interactableOnPlay;
     protected float chargingTime = 0.6f;
 
+    protected SpriteRenderer spriteRenderer;
+
     private void Awake()
     {
         producedEnergies = new List<Energy>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     public void EnergiesChanges(List<EnergyTrail> trails, Energy caller)
@@ -35,21 +49,18 @@ public abstract class Appliance : MonoBehaviour
         Direction finalDirection = Direction.None;
         bool canInfluenceSameType = trails.Count > 0 ? trails[0].energy.canInfluenceSameType : true;
 
-        if (canInfluenceSameType)
+        foreach (EnergyTrail trail in consumedEnergies)
         {
-            foreach (EnergyTrail trail in consumedEnergies)
-            {
-                finalDirection |= trail.direction;
-            }
+            finalDirection |= trail.direction;
+        }
 
-            if (finalDirection.HasFlag(Direction.Right) && finalDirection.HasFlag(Direction.Left))
-            {
-                finalDirection &= ~(Direction.Right | Direction.Left);
-            }
-            if (finalDirection.HasFlag(Direction.Up) && finalDirection.HasFlag(Direction.Down))
-            {
-                finalDirection &= ~(Direction.Up | Direction.Down);
-            }
+        if (finalDirection.HasFlag(Direction.Right) && finalDirection.HasFlag(Direction.Left))
+        {
+            finalDirection &= ~(Direction.Right | Direction.Left);
+        }
+        if (finalDirection.HasFlag(Direction.Up) && finalDirection.HasFlag(Direction.Down))
+        {
+            finalDirection &= ~(Direction.Up | Direction.Down);
         }
 
         if (!powered && consumedEnergies.Count() > 0 && (finalDirection != Direction.None || !canInfluenceSameType))

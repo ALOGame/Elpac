@@ -3,16 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Flags]
-public enum Direction { None = 0, Right = 1, Left = 2, Up = 4, Down = 8 }
-
-public abstract class Energy : MonoBehaviour
+public abstract class Energy
 {
     public EnType energyType { get; private set; }
     public bool canInfluenceSameType { get; protected set; }
     protected Vector2Int gridPos;
     protected List<EnergyTrail> trails;
-    protected List<EnType> affectingEnergies;
+    protected List<EnType> affectingEnergies; // Types of energies that affect this energy
 
     public Energy(EnType type, Vector2Int gridPos)
     {
@@ -24,7 +21,8 @@ public abstract class Energy : MonoBehaviour
     }
 
     public abstract void Spread();
-    public abstract void UpdateTrail(List<EnergyTrail> trails);
+    public abstract void UpdateTrail();
+    public virtual void UpdatePath() { }
     public virtual void StopSpreading()
     {
         SlotGrid.RemoveEnergyTrails(trails);

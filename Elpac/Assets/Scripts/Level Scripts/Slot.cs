@@ -58,7 +58,7 @@ public class Slot : MonoBehaviour
         {
             if (!updatedEnergies.Contains(trail.energy))
             {
-                trail.energy.UpdateTrail(energyTrails);
+                trail.energy.UpdateTrail();
                 updatedEnergies.Add(trail.energy);
             }
         }

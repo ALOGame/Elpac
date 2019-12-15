@@ -128,6 +128,18 @@ public class SlotGrid : MonoBehaviour
         }
     }
 
+    public static void AddEnergyTrail(EnergyTrail trail)
+    {
+        instance.slots[trail.gridPos.x, trail.gridPos.y].AddEnergyTrail(trail);
+        instance.slots[trail.gridPos.x, trail.gridPos.y].UpdateItems(trail.energy);
+    }
+
+    public static void RemoveEnergyTrail(EnergyTrail trail)
+    {
+        instance.slots[trail.gridPos.x, trail.gridPos.y].RemoveEnergyTrail(trail);
+        instance.slots[trail.gridPos.x, trail.gridPos.y].UpdateItems(trail.energy);
+    }
+
     public static Direction GetWireDirection(int xGrid, int yGrid)
     {
         if (!PositionInsideGrid(xGrid, yGrid))

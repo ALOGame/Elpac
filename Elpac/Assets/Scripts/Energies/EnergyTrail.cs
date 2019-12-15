@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Flags]
+public enum Direction { None = 0, Right = 1, Left = 2, Up = 4, Down = 8 }
 public enum EnType { Electric, Light, Wind, Laser, Heat, Steam, Water, Mechanical }
 
 public struct EnergyTrail

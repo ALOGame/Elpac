@@ -14,7 +14,7 @@ public class Steam : Energy
 
     }
 
-    public override void UpdateTrail(List<EnergyTrail> trails)
+    public override void UpdateTrail()
     {
         
     }

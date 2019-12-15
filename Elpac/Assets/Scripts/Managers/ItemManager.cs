@@ -17,6 +17,7 @@ public class ItemManager : MonoBehaviour
     public GameObject laserGun;
     public GameObject laserFeeder;
     public GameObject laserMirror;
+    public GameObject waterDispenser;
 
     private static GameObject PowerSupply() => instance.powerSupply;
     private static GameObject Target() => instance.target;
@@ -30,6 +31,7 @@ public class ItemManager : MonoBehaviour
     private static GameObject LaserGun() => instance.laserGun;
     private static GameObject LaserFeeder() => instance.laserFeeder;
     private static GameObject LaserMirror() => instance.laserMirror;
+    private static GameObject WaterDispenser() => instance.waterDispenser;
 
 
     private static ItemManager instance;
@@ -66,6 +68,8 @@ public class ItemManager : MonoBehaviour
                 return LaserFeeder();
             case ItemType.LaserMirror:
                 return LaserMirror();
+            case ItemType.WaterDispenser:
+                return WaterDispenser();
             default:
                 Debug.Log("GameGrid: Appliance is not implemented yet (" + type + ")");
                 return null;

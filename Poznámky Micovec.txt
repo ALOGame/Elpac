@@ -1,2 +1,1 @@
 Dodelat:
-	SlotGrid - pri vlozeni dratu do tilu, nastavit hodnoty Slot.wire obou bunkam

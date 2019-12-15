@@ -37,23 +37,20 @@ public class LaserMirror : Appliance
 
     protected override void OnPowerOn()
     {
-        Debug.Log("mirror: onpoweron: " + consumedEnergyDir);
-        if ((consumedEnergyDir == Direction.Up && facingUp) || (consumedEnergyDir == Direction.Down && !facingUp))
+        if ((consumedEnergyDir == Direction.Up && !facingUp) || (consumedEnergyDir == Direction.Down && facingUp))
             ReflectLeftRight();
-        else if ((consumedEnergyDir == Direction.Left && !data.facingRight) || (consumedEnergyDir == Direction.Right && data.facingRight))
+        else if ((consumedEnergyDir == Direction.Left && data.facingRight) || (consumedEnergyDir == Direction.Right && !data.facingRight))
             ReflectUpDown();
     }
 
     private void ReflectUpDown()
     {
         laserUpDown.Spread();
-        Debug.Log("laser mirror: started reflecting updown");
     }
 
     private void ReflectLeftRight()
     {
         laserLeftRight.Spread();
-        Debug.Log("laser mirror: started reflecting leftright");
     }
 
     protected override void OnPowerOff()

@@ -11935,6 +11935,8 @@ MonoBehaviour:
     type: 3}
   laserMirror: {fileID: 6081528808676552224, guid: 609d3706fd20fb242af9a7b99a9b5544,
     type: 3}
+  waterDispenser: {fileID: 7312188405776484446, guid: 82b4afbdfa64af44fb1dcc3bf202ff40,
+    type: 3}
 --- !u!4 &2068777340
 Transform:
   m_ObjectHideFlags: 0

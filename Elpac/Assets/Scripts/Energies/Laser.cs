@@ -39,5 +39,5 @@ public class Laser : Energy
         SlotGrid.AddEnergyTrails(trails);
     }
 
-    public override void UpdateTrail(List<EnergyTrail> trails) { }
+    public override void UpdateTrail() { }
 }

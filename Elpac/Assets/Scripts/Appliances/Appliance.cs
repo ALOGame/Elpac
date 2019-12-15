@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemType { UnKnown = 0, PowerSupply = 1, PowerConsumer = 2, VerticalWire = 3, HorizontalWire = 4, Fan = 5, WindTurbine = 6, Battery = 7, Heater = 8, Heatsink = 9, LaserGun = 10, LaserFeeder = 11, LaserMirror = 12 }
+public enum ItemType { UnKnown = 0, PowerSupply = 1, PowerConsumer = 2, VerticalWire = 3, HorizontalWire = 4, Fan = 5, WindTurbine = 6, Battery = 7, Heater = 8, Heatsink = 9, LaserGun = 10, LaserFeeder = 11, LaserMirror = 12, WaterDispenser = 13 }
 
 public abstract class Appliance : MonoBehaviour
 {
-
     private ItemData _data;
     public ItemData data
     {
@@ -28,18 +27,23 @@ public abstract class Appliance : MonoBehaviour
     protected Direction consumedEnergyDir;
     protected EnType consumerableEnergyType;
     protected List<Energy> producedEnergies;
+    protected List<Energy> updatableEnergies;
     protected bool interactableOnPlay;
     protected float chargingTime = 0.6f;
 
     protected SpriteRenderer spriteRenderer;
 
+    protected int updatePeriod = 20;
+    protected IEnumerator enumerator;
+
     private void Awake()
     {
         producedEnergies = new List<Energy>();
+        updatableEnergies = new List<Energy>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    public void EnergiesChanges(List<EnergyTrail> trails, Energy caller)
+    public virtual void EnergiesChanges(List<EnergyTrail> trails, Energy caller)
     {
         if (producedEnergies.Contains(caller))
             return;
